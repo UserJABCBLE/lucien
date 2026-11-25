@@ -144,15 +144,23 @@ code{font-size:13px;background:#f3eee3;padding:1px 5px;border-radius:2px}
         <table class="stt"><thead><tr><th>글</th><th>최근 7일</th><th>전체</th></tr></thead><tbody id="stBody"></tbody></table>
         <div class="acts"><button class="btn sm" type="button" id="stReload">새로고침</button><a class="btn sm" id="stLink" target="_blank" rel="noopener">GoatCounter에서 자세히 보기 ↗</a></div>
         <p class="status" id="stStatus" role="status"></p>
-        <p class="help">같은 사람이 8시간 안에 다시 본 건 한 번으로 세요. GoatCounter가 숫자를 최대 4시간까지 묵혀 두었다가 보여 줘서, 방금 본 조회가 바로 안 올라올 수 있어요.</p>
-        <details class="card" id="stHelp" style="margin-top:18px"><summary>숫자가 안 나오면 (처음 한 번 설정)</summary>
-          <ol>
-            <li>GoatCounter에 로그인 → 오른쪽 위 <b>Settings</b></li>
-            <li><b>Allow adding visitor counts on your website</b>를 체크하고 맨 아래 <b>Save</b></li>
-            <li>이 화면으로 돌아와 <b>새로고침</b></li>
-          </ol>
-          <p class="help">이 설정을 켜면 조회수 숫자만 바깥에서 읽을 수 있게 돼요. 글 내용이나 방문자 정보는 나가지 않아요.</p>
-        </details>
+        <p class="help" id="stSrc"></p>
+        <p class="help">같은 사람이 8시간 안에 다시 본 건 한 번으로 세요.</p>
+        <div class="card" style="margin-top:18px">
+          <h2>GoatCounter API 키</h2>
+          <p class="help">API 키를 넣으면 GoatCounter 대시보드와 같은 숫자가 바로 나와요. 키는 이 브라우저에만 저장되고 사이트에는 올라가지 않아요.</p>
+          <label for="gcKey">API 키</label>
+          <input type="password" id="gcKey" placeholder="GoatCounter에서 만든 키" autocomplete="off" spellcheck="false">
+          <div class="acts"><button class="btn pri sm" type="button" id="gcKeySave">저장하고 불러오기</button><button class="btn sm warn" type="button" id="gcKeyDel">키 지우기</button></div>
+          <details style="margin-top:14px"><summary>API 키 만드는 법</summary>
+            <ol>
+              <li>GoatCounter에 로그인 → 오른쪽 위 <b>내 계정 이름(이메일)</b> 메뉴 → <b>API</b></li>
+              <li><b>Name</b>에 <code>lucien-admin</code></li>
+              <li>Permissions에서 <b>Read statistics</b>만 체크</li>
+              <li><b>Create</b>(또는 Save)를 누르고, 생긴 키를 복사해서 위 칸에 붙여넣기</li>
+            </ol>
+          </details>
+        </div>
       </div>
     </div>
 
@@ -285,8 +293,22 @@ document.querySelector('.tabs').addEventListener('click', e => {
   if (b.dataset.tab === 'stats') loadStats();
 });
 
-/* ── 조회수 (GoatCounter 공개 숫자 주소에서 읽기) ── */
-async function gcCount(code, path, week) {
+/* ── 조회수 ──
+   API 키가 있으면 GoatCounter API에서 바로(대시보드와 같은 숫자),
+   없으면 공개 숫자 주소에서(설정 필요, 최대 4시간 늦음) 읽는다. */
+const gcKey = () => { try { return localStorage.getItem('lucien-gckey') || ''; } catch (e) { return ''; } };
+async function gcApi(code, start) {
+  const q = new URLSearchParams({limit: '100'});
+  if (start) q.set('start', start);
+  const r = await fetch(`https://${code}.goatcounter.com/api/v0/stats/hits?${q}`, {
+    cache: 'no-store', headers: {Authorization: 'Bearer ' + gcKey(), 'Content-Type': 'application/json'}});
+  if (r.status === 401 || r.status === 403) throw new Error('API 키가 맞지 않거나 Read statistics 권한이 없어요.');
+  if (!r.ok) throw new Error('GoatCounter 응답 ' + r.status);
+  const j = await r.json(), map = {};
+  (j.hits || []).forEach(h => { map[h.path] = (map[h.path] || 0) + (h.count || 0); });
+  return {map, total: j.total || 0};
+}
+async function gcPublic(code, path, week) {
   const url = `https://${code}.goatcounter.com/counter/${encodeURIComponent(path)}.json${week ? '?start=week' : ''}`;
   const r = await fetch(url, {cache: 'no-store'});
   if (r.status === 404) return 0;
@@ -302,16 +324,36 @@ async function loadStats() {
   const rows = [{label: '게시판 (목록)', path: '/'}, ...data.posts.map(p => ({label: `${p.id}. ${p.title}`, path: '/log-' + p.id}))];
   $('#stBody').innerHTML = rows.map((r, i) => `<tr><td>${esc(r.label)}<small>${esc(r.path)}</small></td><td id="w${i}">…</td><td id="a${i}">…</td></tr>`).join('')
     + '<tr class="sum"><td>사이트 전체</td><td id="wT">…</td><td id="aT">…</td></tr>';
+  const put = (id, n) => { $('#' + id).textContent = n == null ? '—' : fmt(n); };
   status($('#stStatus'), '불러오는 중…');
+  if (gcKey()) {
+    $('#stSrc').textContent = 'API 키로 불러온 숫자예요. 대시보드와 같아요.';
+    try {
+      const [all, week] = await Promise.all([gcApi(code, '2000-01-01T00:00:00Z'), gcApi(code, '')]);
+      rows.forEach((r, i) => { put('a' + i, all.map[r.path] || 0); put('w' + i, week.map[r.path] || 0); });
+      put('aT', all.total); put('wT', week.total);
+      status($('#stStatus'), '');
+    } catch (e) {
+      rows.forEach((r, i) => { put('a' + i); put('w' + i); }); put('aT'); put('wT');
+      status($('#stStatus'), e.message, 'err');
+    }
+    return;
+  }
+  $('#stSrc').textContent = 'API 키가 없어서 공개 숫자 주소에서 불러왔어요. GoatCounter 설정의 Allow adding visitor counts가 켜져 있어야 하고, 숫자가 최대 4시간 늦어요. 아래에 API 키를 넣으면 바로 정확한 숫자가 나와요.';
   let failed = 0;
-  const cell = (id, p) => p.then(n => { $('#' + id).textContent = fmt(n); }).catch(() => { failed++; $('#' + id).textContent = '—'; });
+  const cell = (id, p) => p.then(n => put(id, n)).catch(() => { failed++; put(id); });
   const jobs = [];
-  rows.forEach((r, i) => { jobs.push(cell('a' + i, gcCount(code, r.path))); jobs.push(cell('w' + i, gcCount(code, r.path, true))); });
-  jobs.push(cell('aT', gcCount(code, 'TOTAL'))); jobs.push(cell('wT', gcCount(code, 'TOTAL', true)));
+  rows.forEach((r, i) => { jobs.push(cell('a' + i, gcPublic(code, r.path))); jobs.push(cell('w' + i, gcPublic(code, r.path, true))); });
+  jobs.push(cell('aT', gcPublic(code, 'TOTAL'))); jobs.push(cell('wT', gcPublic(code, 'TOTAL', true)));
   await Promise.all(jobs);
-  if (failed) { status($('#stStatus'), '일부 숫자를 못 불러왔어요. 아래 "숫자가 안 나오면"의 설정을 확인해 주세요.', 'err'); $('#stHelp').open = true; }
-  else status($('#stStatus'), '');
+  status($('#stStatus'), failed ? '숫자를 못 불러왔어요. 아래에 API 키를 넣어 주세요.' : '', failed ? 'err' : '');
 }
+$('#gcKeySave').addEventListener('click', () => {
+  const k = $('#gcKey').value.trim(); if (!k) return;
+  try { localStorage.setItem('lucien-gckey', k); } catch (e) {}
+  $('#gcKey').value = ''; loadStats();
+});
+$('#gcKeyDel').addEventListener('click', () => { try { localStorage.removeItem('lucien-gckey'); } catch (e) {} loadStats(); });
 $('#stReload').addEventListener('click', loadStats);
 
 /* ── 글 목록 ── */
