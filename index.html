@@ -75,8 +75,11 @@ function setupCounter() {
   s.dataset.goatcounter = `https://${gc}.goatcounter.com/count`;
   document.head.appendChild(s);
 }
+// 관리자 화면에서 '내 조회 빼기'를 켠 브라우저는 세지 않는다
+let mine = false;
+try { mine = localStorage.getItem('lucien-nocount') === '1'; } catch (e) {}
 function count(path, title) {
-  if (!gc) return;
+  if (!gc || mine) return;
   let tries = 0;
   const go = () => window.goatcounter && window.goatcounter.count ? window.goatcounter.count({path, title})
     : (++tries < 25 && setTimeout(go, 400));
