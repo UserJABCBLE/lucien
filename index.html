@@ -3,109 +3,21 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive">
 <title>LUCIEN</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
 <style>
-/* VOICE  고요하고 단정한 낭독. 문서 원본의 크림색 종이와 검은 글씨를 그대로.
-   IDEA   책상 위에 놓인 한 장의 원고지 — 목록은 장부의 목차, 글은 그 한 장.
-   COLOUR 종이 #fffdf8, 책상 #ece6da, 먹 #1d1b18, 바랜 금 #9a8459 하나.
-   TYPE   고운바탕 한 가지. 제목 34~44px, 본문 16~17px. */
-:root{color-scheme:light;--desk:#ece6da;--paper:#fffdf8;--ink:#1d1b18;--soft:#6f675b;--line:#d9d0bf;--gold:#9a8459;--leaf:#8a9466}
-*{box-sizing:border-box;min-width:0}
-html{scroll-padding-top:72px;-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--desk);color:var(--ink);font:16px/1.6 "Gowun Batang","Nanum Myeongjo","AppleMyungjo",serif;overflow-x:clip;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .3 0 0 0 0 .22 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-a{color:inherit}
-button{font:inherit;color:inherit}
-:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:4px}
-
-.wrap{max-width:820px;margin:0 auto;padding:clamp(0px,3vw,40px) clamp(0px,3vw,24px) 120px}
-.sheet{position:relative;background:var(--paper);box-shadow:0 1px 2px rgba(40,30,10,.08),0 8px 30px rgba(40,30,10,.07);padding:clamp(28px,7vw,76px) clamp(22px,8vw,84px) clamp(36px,7vw,72px);min-height:70vh}
-@media(max-width:600px){.sheet{box-shadow:none;min-height:100vh}}
-
-/* ── 목록 ── */
-.site-head{margin-bottom:clamp(28px,5vw,48px)}
-.site-head h1{font-size:clamp(32px,6vw,44px);line-height:1.1;margin:0 0 10px;font-weight:700;letter-spacing:-.01em}
-.site-head p{margin:0;color:var(--soft)}
-.series{margin-top:8px}
-.series h2{font-size:20px;line-height:1.35;margin:0 0 16px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
-.series h2 small{font-size:13px;color:var(--soft);font-weight:400}
-.series>p{margin:0 0 18px;color:var(--soft);font-size:15px}
-.list{list-style:none;margin:0;padding:0;border-top:1px solid var(--ink)}
-.list li{border-bottom:1px solid var(--line)}
-.list a{display:grid;grid-template-columns:3.2em minmax(0,1fr);gap:4px 14px;padding:20px 6px;text-decoration:none;transition:background .2s}
-.list a:hover{background:rgba(154,132,89,.07)}
-@media(max-width:600px){.list a{grid-template-columns:2.3em minmax(0,1fr);gap:4px 10px}.no{font-size:24px}}
-.no{grid-row:span 3;font-size:30px;line-height:1;color:var(--gold);padding-top:2px;font-variant-numeric:lining-nums}
-.ttl{font-size:21px;font-weight:700;line-height:1.3}
-.ttl span{font-weight:400;font-size:15px;color:var(--soft);margin-left:6px}
-.ex{color:#4a443b;font-size:15px;line-height:1.65;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.meta{font-size:13px;color:var(--soft);display:flex;gap:12px;flex-wrap:wrap}
-.foot{margin-top:40px;text-align:center;color:var(--soft);font-size:13px}
-
-/* ── 글 ── */
-.bar{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:12px;margin:calc(-1 * clamp(28px,7vw,76px)) calc(-1 * clamp(22px,8vw,84px)) 0;padding:10px clamp(14px,6vw,64px);background:rgba(255,253,248,.92);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border-bottom:1px solid transparent;transition:border-color .2s}
-.bar.on{border-bottom-color:var(--line)}
-.back{flex:none;white-space:nowrap;display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 10px 0 4px;background:none;border:0;cursor:pointer;font-size:15px}
-.bar .crumb{color:var(--soft);font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.prog{position:absolute;left:0;bottom:-1px;height:2px;background:var(--gold);width:0}
-.post-head{text-align:center;margin:clamp(100px,20vw,184px) 0 clamp(60px,12vw,104px)}
-.post-head .kicker{font-size:14px;color:var(--soft);margin:0 0 48px}
-#ph:focus{outline:none}
-.post-head h1{font-size:clamp(28px,7vw,38px);line-height:1.1;margin:0;font-weight:700}
-.post-head h1 span{display:block;font-size:16px;font-weight:400;color:var(--gold);margin-top:20px;letter-spacing:.3em}
-.orn{display:block;width:120px;height:18px;margin:72px auto 0;color:var(--gold)}
-
-.doc{font-size:16px;line-height:1.9;word-break:keep-all;overflow-wrap:break-word}
-@media(max-width:600px){.doc{font-size:15px;line-height:1.85}}
-.doc p{margin:0 0 .85em;text-indent:1em}
-.doc p.c{text-align:center;text-indent:0}
-.doc p.r{text-align:right;text-indent:0}
-.doc p.it{font-style:italic;text-indent:0;color:#2c2924}
-.doc p.num{font-weight:700;text-indent:0;color:var(--gold);letter-spacing:.06em;margin-bottom:1.2em}
-.doc .gap.s1{height:.5em}.doc .gap.s2{height:1.5em}.doc .gap.s3{height:3em}
-.doc .sep{text-align:center;text-indent:0;margin:6.6em 0;color:var(--gold);font-size:13px;letter-spacing:1.4em;padding-left:1.4em}
-.doc .sep span::before,.doc .sep span::after{content:"✦";font-size:9px;opacity:.6;vertical-align:middle}
-.doc .letter{border:1px solid var(--ink);padding:1.2em 1.5em 1.1em;margin:1.8em auto;max-width:27em;font-style:italic;background:#fffef9}
-.doc .letter p{text-indent:0;margin-bottom:.35em}
-.doc .end{text-align:center;text-indent:0;margin:9em 0 0}
-.doc .end span{display:inline-block;width:46px;height:1px;background:var(--ink);vertical-align:middle}
-
-.pager{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:clamp(144px,24vw,240px);border-top:1px solid var(--ink);padding-top:22px}
-.pager a{display:block;text-decoration:none;padding:14px 16px;border:1px solid var(--line);min-height:44px;transition:border-color .2s,background .2s}
-.pager a:hover{border-color:var(--gold);background:rgba(154,132,89,.05)}
-.pager a small{display:block;font-size:12px;color:var(--soft);margin-bottom:4px}
-.pager .nx{text-align:right;grid-column:2}
-.tolist{display:block;width:max-content;margin:28px auto 0;min-height:44px;padding:0 22px;background:none;border:1px solid var(--ink);cursor:pointer;font-size:15px}
-.tolist:hover{background:var(--ink);color:var(--paper)}
-
-/* ── 음악 단추 ── */
-.music{position:fixed;right:max(16px,env(safe-area-inset-right));bottom:max(18px,env(safe-area-inset-bottom));z-index:20;display:flex;align-items:center;gap:10px;flex-direction:row-reverse}
-.music[hidden]{display:none}
-.disc{width:54px;height:54px;border-radius:50%;border:1px solid var(--ink);background:var(--paper);cursor:pointer;display:grid;place-items:center;box-shadow:0 4px 14px rgba(40,30,10,.16);padding:0}
-.disc svg{width:40px;height:40px}
-.disc .rec{transform-origin:20px 20px}
-.playing .disc .rec{animation:spin 6s linear infinite}
-.disc .pz{display:none}.playing .disc .pz{display:block}.playing .disc .pl{display:none}
-.hint{background:var(--ink);color:var(--paper);font-size:13px;padding:7px 12px;border-radius:999px;white-space:nowrap;opacity:0;transform:translateX(6px);transition:opacity .3s,transform .3s;pointer-events:none}
-.music.ask .hint,.music.say .hint{opacity:1;transform:none}
-.music.ask.quiet .hint{opacity:0;transform:translateX(6px)}
-.music.ask .disc{animation:pulse 1.6s ease-in-out infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-@keyframes pulse{0%,100%{box-shadow:0 4px 14px rgba(40,30,10,.16),0 0 0 0 rgba(154,132,89,.5)}50%{box-shadow:0 4px 14px rgba(40,30,10,.16),0 0 0 10px rgba(154,132,89,0)}}
-#yt{position:fixed;left:0;bottom:0;width:200px;height:200px;opacity:0;pointer-events:none;z-index:-1}
-
-.view{animation:fade .45s ease}
-@keyframes fade{from{opacity:0;transform:translateY(6px)}}
-@media(prefers-reduced-motion:reduce){.view,.playing .disc .rec,.music.ask .disc{animation:none}}
+/* 복사 방지: 선택·길게누르기·끌기·인쇄 막기 */
+body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+img,svg{-webkit-user-drag:none;user-drag:none}
+@media print{body{display:none!important}}
 </style>
 </head>
 <body>
-
-
-<main class="wrap"><article class="sheet" id="sheet"></article></main>
+<main class="wrap"><article class="sheet" id="sheet"><p class="loading">불러오는 중…</p></article></main>
 
 <div class="music" id="music" hidden>
   <button class="disc" id="disc" type="button" aria-label="배경음악 재생">
@@ -119,22 +31,44 @@ button{font:inherit;color:inherit}
 </div>
 <div id="yt" aria-hidden="true"></div>
 
-<script type="application/json" id="data">{"site": {"title": "LUCIEN", "subtitle": "-", "goatcounter": ""}, "series": [{"id": "lucien", "name": "Lucien Théodore de Castellane", "desc": ""}], "posts": [{"id": "01", "series": "lucien", "title": "이월", "hanja": "移越", "bgm": "xhjS2LJwlQQ", "html": "\u003cp>1814년 봄, 마침내 코르시카 출신의 황제가 무너졌다. 연합군의 군화가 파리의 진창을 밟았고, 황제는 지중해의 작은 섬 엘바로 실려 갔다. 단두대에서 죽은 왕의 아우가 루이 18세라는 이름으로 튈르리궁에 들었다.\u003c/p>\n\u003cp>스물다섯 해의 길고 눅눅한 겨울 끝에, 이윽고, 마침내, 부르봉 왕가는 찬탈당했던 왕좌를 되찾았다. 백합 문장이 다시 내걸리기까지 지난한 세월이었다.\u003c/p>\n\u003cp>국경 밖을 떠돌던 이들이 앞다투어 돌아왔다. 돌아와서 가장 먼저 한 일은 잃은 것을 꼽아 보는 일이었다. 혁명 때 몰수당한 영지, 헐값에 넘어간 숲, 이름도 모를 부르주아의 머리글자가 덧칠된 대문. 손가락은 금세 모자랐다. 왕은 돌아왔지만, 한번 팔려 나간 땅까지 되찾지는 못했다. 광장의 칼날이 얼마나 가차 없이 떨어졌는지, 그 아래 모여 환호하던 얼굴들이 얼마나 굶주려 있었는지를 그들은 아직 기억했다.\u003c/p>\n\u003cp>밟고 서 있던 발밑의 것들이 두려운 줄을, 귀족들은 그제야 배워 가고 있었으므로 새 주인의 손아귀를 비틀어 땅을 도로 빼앗을 배짱은 어디에도 남아 있지 않았다. 결국 그들 손에 남은 것은 작위와 이름뿐이었다. 무겁고, 오래되고, 값을 치를 길이 없는.\u003c/p>\n\u003cp>귀족들의 사정이야 어찌 되었든, 왕은 돌아왔고 그것만으로도 충분한 땅이 있었다. 남쪽의 프로방스는 그 왕을 누구보다 반겼다. 성주의 대저택에서뿐 아니라, 밭을 갈던 농부와 그물을 걷던 어부의 부엌에서까지 백합 깃발이 나부꼈다. 이 땅의 사람들은 대대로 성모상 앞에 촛불을 켜고, 종소리에 맞춰 밭을 갈고 그물을 걷었다. 혁명은 그 성당 문부터 닫았고, 신성한 종탑의 종은 끌어내려져 녹아 대포로 화하였다.\u003c/p>\n\u003cp>파리에 맞서 일어섰던 마르세유는 짓밟힌 끝에 이름마저 빼앗겼다. 황제는 해마다 마을의 아들들을 데려갔고, 돌아오는 이는 드물었다. 영국 함대가 막아 선 마르세유 항구에는 배 대신 썩은 해초만 밀려들었다. 카스텔란가의 배들도 그 몇 해 동안 부두에 묶인 채 밑창부터 삭아 갔다.\u003c/p>\n\u003cp>그러니 이 땅의 사람들에게 왕이 돌아온다는 것은 성당의 종과, 데려간 아들들과, 막혔던 바다가 함께 돌아온다는 뜻이었다. 남쪽의 충성은 위에서 내려온 것이 아니라, 발밑에서부터 차오른 것이었다.\u003c/p>\n\u003cp>왕의 귀환 후 사람들은 프로방스를 하얀 남부라 불렀다. 부르봉의 백합처럼 희다고. 성당마다 다시 종이 울렸고, 선교사들은 마을 어귀마다 새 십자가를 박았다. 회칠한 십자가는 남부의 볕 아래에서 눈이 시리도록 희었다.\u003c/p>\n\u003cp>카스텔란가의 외아들은 그해 늦봄, 다시 울리기 시작한 성당 종소리 속에서 태어났다.\u003c/p>\n\u003cp>이듬해 봄, 황제가 섬을 빠져나와 백 일 동안 다시 파리를 차지했다. 그리고 워털루의 진흙 속에서 끝내 무너졌다. 왕이 두 번째로 돌아오던 그해 여름, 님의 골목에서는 왕을 기다리던 바로 그 손들이 보나파르트파와 개신교도를 끌어내 쳐 죽였다. 가르강의 물빛이 한동안 탁했다고들 했다. 그 일을 오래 입에 올리는 사람은 없었다. 신앙과 충성과 피가 한 그릇에 담겨 있었고, 아무도 그 그릇을 엎지 않던 시절이었다.\u003c/p>\n\u003cp>저택의 덧창은 그해 내내 반쯤 닫혀 있었다.\u003c/p>\n\u003cp class=\"sep\" aria-label=\"장면 전환\">\u003cspan>✦\u003c/span>\u003c/p>\n\u003cdiv class=\"gap s2\">\u003c/div>\n\u003cp>엑상프로방스의 카스텔란가 저택은 늘 조용했다.\u003c/p>\n\u003cp>긴 복도에는 발소리를 삼키는 양탄자가 두껍게 깔려 있었고, 오후가 되면 높은 창으로 들어온 볕이 그 위에 길쭉한 사각형을 몇 개 그려 두었다가 해 질 녘이면 말없이 걷어 갔다. 그 사각형을 밟고 지나가는 것이 하인 몇의 발뿐인 날이 많았다. 오래 닫아 둔 방에서는 밀랍과 먼지와 묵은 라벤더 냄새가 났다. 아무도 그 문을 열지 않았으므로, 냄새는 해마다 조금씩 깊어져 벽지의 꽃무늬 틈까지 배어들었다.\u003c/p>\n\u003cp>저택의 주인 카스텔란 백작은 한 해의 절반 넘게 파리에 있었다. 국왕 폐하 곁에서 집안의 체면을 세우고 있다고들 했다. 그가 보내오는 편지는 늘 짧았고, 날짜가 자주 틀렸고, 이따금 남의 필체로 대필되어 왔다. 나중에야 알게 된 일이지만, 편지가 유독 늦게 오는 달이면 은식기장의 포크가 몇 벌씩 줄었다.\u003c/p>\n\u003cp>카스텔란가는 대대로 마르세유 항구에 창고와 배를 두었다. 그러나 카스텔란의 이름을 가진 사람이 그 창고 문턱을 넘은 적은 없었다. 배를 사고 화물을 고르고 값을 흥정하는 것은 대리인의 일이었다. 당주는 일 년에 한 번 그가 올리는 보고서의 마지막 줄만 받아 들었다. 남부의 오래된 집안들은 다들 그렇게 돈을 벌었다. 돈이 어디서 흘러오는지 모르는 척하는 것까지가 가문의 품위였다. 그 품위에서는 늘 바다 냄새 대신 향수 냄새가 났다.\u003c/p>\n\u003cp>백작부인은 저택에 머물렀지만 저택에 사는 사람 같지는 않았다. 아침 식탁에서는 아들의 옷깃이 반듯한지를 보았고, 저녁 식탁에서는 가정교사의 보고를 들었다. 칭찬과 꾸중의 온도가 같았다. 영특하다는 말에도, 수프를 남겼다는 말에도 그녀는 똑같이 고개를 한 번 끄덕이고 포크를 들었다. 은포크가 사기 접시에 닿는 소리만 식당 천장까지 올라갔다가, 아무에게도 닿지 못하고 떨어졌다.\u003c/p>\n\u003cp>백작부부가 아들을 대하는 방식은 여느 귀족가와 다르지 않았다. 계절마다 새 옷을 지어 주었고 이름난 가정교사를 들였으며, 생일이면 은으로 된 무언가를 건넸다.\u003c/p>\n\u003cp>그것이 사랑인지 아닌지 아이는 따져 보지 않았다. 견줄 거리가 없는 아이에게는 빈자리도 빈자리로 보이지 않는 법이었다.\u003c/p>\n\u003cp>‘어머니는 오늘도 사파이어를 하셨네.’\u003c/p>\n\u003cp>일곱 살의 뤼시엔이 저녁 식탁에서 가장 오래 바라보는 것은 어머니의 얼굴이 아니라 그 목에 걸린 돌이었다.\u003c/p>\n\u003cp>깊은 바다를 한 움큼 떠서 얼려 놓은 것 같은 푸른색의 엄지손톱만 한 돌. 촛불이 흔들릴 때마다 그 속에서 빛이 한 겹씩 벗겨졌다가 다시 감겼다.\u003c/p>\n\u003cp>뤼시엔은 그 반짝임이 좋았다. 이 고요한 집에서 유일하게 제 쪽으로 무언가를 돌려주는 것이었기 때문에. 어머니는 아들을 오래 보지 않았지만, 어머니의 사파이어는 아들이 바라보는 만큼 꼬박꼬박 빛을 돌려주었다.\u003c/p>\n\u003cp>가정교사들은 그를 영특하나 조금 까다로운 도련님이라 불렀다. 라틴어 동사 변화는 한 번 가르치면 틀리는 법이 없었고, 산수는 가르친 적 없는 연산까지도 스스로 깨우쳤다. 영특함과 까탈스러움은 비례하기라도 하는 것인지, 이 영특한 도련님은 식탁보에 접힌 자국이 있으면 수프에 손을 대지 않았고, 남이 앉았던 의자에는 하인이 쿠션을 갈기 전까지 앉지 않았다. 손님이 쓰다듬으려 손을 뻗으면 한 걸음 물러서서, 일곱 살답지 않게 정중한 인사로 그 손을 허공에 세워 두었다. 뻗은 손은 한동안 갈 곳을 잃고 머물다가, 멋쩍게 제 주인의 조끼 주머니로 돌아가기 일쑤였다.\u003c/p>\n\u003cp>“도련님은 꼭 고양이 같으세요.”\u003c/p>\n\u003cp>젊은 하녀 하나가 그렇게 말했다가 이튿날부터 보이지 않았다. 주인을 섬기는 태도가 되먹지 못하다며 백작부인이 내보낸 것이었다. 정작 뤼시엔은 그 말이 썩 싫지 않았다. 앞치마에 밀가루를 묻힌 채, 아무것도 재지 않는 수더분한 얼굴로 내뱉는 감상이. 무엇이 좋았는지는 그도 알지 못했다. 다만 이튿날 아침 부엌 쪽 복도에서 그 웃음소리가 들리지 않았을 때, 뤼시엔은 계단참에 서서 한참을 그쪽을 내려다보았다.\u003c/p>\n\u003cp>그해 봄, 어머니가 드물게 먼저 입을 열었다.\u003c/p>\n\u003cp>“니스에서 손님이 오신다. 발디에리 가문이다.”\u003c/p>\n\u003cp>포크를 내려놓은 백작부인이 냅킨으로 입가를 눌렀다.\u003c/p>\n\u003cp>“사보이아 왕가의 피가 흐르는 집안이야. 너와 같은 나이의 따님이 하나 있다.”\u003c/p>\n\u003cp>그 뒤에 이어질 말이 무엇인지 아이로 길러진 적 없는 일곱 살의 어린 후계자는 어렴풋이 짐작할 수 있었다.\u003c/p>\n\u003cp class=\"sep\" aria-label=\"장면 전환\">\u003cspan>✦\u003c/span>\u003c/p>\n\u003cdiv class=\"gap s2\">\u003c/div>\n\u003cp>프로방스의 사월은 공기에 단맛이 돌았다. 정원 담장을 따라 늘어선 오렌지나무가 일제히 꽃을 피워, 바람이 불 때마다 꿀을 녹인 것 같은 향이 피부에 끈덕지게 들러붙었다. 숨을 들이쉬면 목구멍 안쪽까지 달아졌고, 내쉬어도 그 단맛은 쉽게 빠져나가지 않았다. 뤼시엔은 일 년 중 이맘때를 가장 싫어했다.\u003c/p>\n\u003cp>손님들은 정원의 차양 아래에서 차를 마셨다. 어른들의 말소리는 낮고 길었다. 지참금이니 영지니 하는 단어들이 그 들척지근한 공기 사이로 간간이 가라앉았다. 그 사이에 얌전히 끼어 앉아 있던 뤼시엔은 얼마 지나지 않아 정원 끝으로 보내졌다. 따님과 인사를 나누라는 뜻이었다.\u003c/p>\n\u003cp>니스에서 온 사보이아 왕가의 피가 흐르는 발디에리 가의 따님은 이미 정원 끝 화단 앞에 쪼그려 앉아 있었다.\u003c/p>\n\u003cp>흰 모슬린 드레스 자락이 젖은 흙바닥에 닿아 있었다. 뤼시엔은 인사보다 그것이 먼저 눈에 걸렸다.\u003c/p>\n\u003cp>“그거, 더러워질 텐데.”\u003c/p>\n\u003cp>소녀가 고개를 들었다.\u003c/p>\n\u003cp>뤼시엔은 그 자리에 멈춰 섰다.\u003c/p>\n\u003cp>새파란 눈.\u003c/p>\n\u003cp>어머니의 사파이어와 같은 색, 그러나 뤼시엔의 어린 생애 동안 본 적이 없는. 오후의 볕이 동공 가장자리에 닿아 녹아들면서 파랑이 한 겹씩 묽어졌고, 가장 안쪽에는 니스의 얕은 바다처럼 바닥이 비칠 것 같은 맑은 빛이 고여 있었다. 정반대 온도의 파란 빛이었다.\u003c/p>\n\u003cp>볕에 그을린 뺨은 사과처럼 동그랬다. 밤색 머리카락은 리본에서 반쯤 빠져나와 제멋대로 뻗쳐 있었는데, 오후의 볕이 그 잔머리 한 올 한 올을 꿰뚫고 지나가는 바람에 머리 둘레가 금실로 테를 두른 것처럼 보였다. 성당 제단화 속 아기 천사들의 머리 뒤에 그려진 그것과 닮아 있었다. 제단화 속 천사들은 흙바닥에 주저앉아 있지 않았지만.\u003c/p>\n\u003cp>무릎 위에는 꺾은 꽃이 한 아름이었다. 오렌지꽃, 분홍 장미, 흰 마거리트, 이름 모를 노란 들꽃. 한꺼번에 밀려오는 향에 뤼시엔은 그제야 정신이 들어 미간을 찌푸렸다.\u003c/p>\n\u003cp>“냄새가 너무 독해.”\u003c/p>\n\u003cp>“이건 꽃인데?”\u003c/p>\n\u003cp>“그러니까.”\u003c/p>\n\u003cp>소녀는 그 대답이 몹시 이상하다는 얼굴로 그를 빤히 올려다보았다. 이 집 도련님은 꽃에서 꽃 냄새가 난다고 화를 내는구나, 하는 얼굴이었다. 파란 눈이 동그랗게 커지자 그 안에 고인 빛이 찰랑 흔들렸다.\u003c/p>\n\u003cp>그러다 그 눈이 천천히 가늘어졌다.\u003c/p>\n\u003cp>무언가 아주 재미있는 것을 발견한 얼굴이었다. 소녀는 무릎 위의 꽃을 하나씩 집어 코에 대 보기 시작했다. 마거리트, 들꽃, 장미. 어른들이 기도문을 욀 때보다도 진지한 얼굴이었다. 꽃잎에 코끝을 묻을 때마다 노란 꽃가루가 콧등에 조금씩 묻어났는데, 본인은 그것도 모르는 눈치였다. 그리고 마지막으로 오렌지꽃에 코를 대더니, 만족스럽다는 듯 고개를 끄덕였다.\u003c/p>\n\u003cp>제일 향이 진한 것이었다.\u003c/p>\n\u003cp>소녀가 벌떡 일어섰다. 동갑내기라던 아이는 키가 그의 턱 아래까지밖에 오지 않았다. 그녀는 까치발을 들고, 그 오렌지꽃 가지를 뤼시엔의 재킷 단춧구멍에 쏙 꽂아 넣었다.\u003c/p>\n\u003cp>뤼시엔은 숨을 멈췄다.\u003c/p>\n\u003cp>꿀을 녹인 것 같은 향이 코앞에서 왈칵 피어올랐다. 평소 같았으면 반걸음 물러서서 정중한 인사로 그 손을 허공에 세워 두었을 테지만 구태여 혼약을 위해 어머니가 정원 끝으로 보낸, 어른들이 차양 아래에서 무언가를 정하고 있는 집안의 딸이다. 그러니 무례를 범할 수는 없었다. 조숙한 일곱 살의 조그만 머리통 속에서 필사적인 변명을 떠올린다.\u003c/p>\n\u003cp>뤼시엔은 꽃을 빼지 않았다. 대신 조금 들린 턱에 아주 조그만 호두알이 생겼다.\u003c/p>\n\u003cp>소녀가 웃음을 터뜨렸다.\u003c/p>\n\u003cp>“참는 얼굴이 진짜 웃겨.”\u003c/p>\n\u003cp>“······.”\u003c/p>\n\u003cp>“그렇게 싫으면 버리지 뭘 참구 있어?”\u003c/p>\n\u003cp>“손님이 준 걸 함부로 버리는 건 예의가 아니야.”\u003c/p>\n\u003cp>“그럼 계속 참아.”\u003c/p>\n\u003cp>그녀는 그 대답이 마음에 쏙 들었다는 듯 파란 눈을 반달 모양으로 접으며 웃었다. 앞니 하나가 빠진 자리가 까맣게 비어 있었다. 그러고는 남은 꽃 중에서 흰 마거리트 한 송이를 골라 제 머리에 아무렇게나 꽂았다.\u003c/p>\n\u003cp>“이건 냄새 안 나니까 내 거.”\u003c/p>\n\u003cp>‘··· 일부러였군.’\u003c/p>\n\u003cp>향이 없는 꽃이 무엇인지 알면서, 그것은 제 머리에 꽂고 가장 향이 진한 것을 그에게 준 것이었다. 그 사실을 깨달은 일곱살의 가느다란 눈썹 사이에 금이 하나 더 생겼다. 소녀는 그 얼굴을 보고 또 웃었다.\u003c/p>\n\u003cp>머리에 꽂힌 마거리트가 볕을 받아 반쯤 투명해져 있었다. 꽃잎 가장자리가 얇게 비쳐서 그 뒤의 잔머리 그림자가 희미하게 어른거렸다. 뤼시엔은 가슴팍의 오렌지꽃 향에 숨이 막히면서도 그 흰 꽃잎에서 눈을 떼지 못했다. 왜 그랬는지는 알 수 없었다.\u003c/p>\n\u003cp>‘··· 바보 같아.’\u003c/p>\n\u003cp>그렇게 생각했는데도 시선이 잘 떨어지지 않았다. 빠진 앞니에서, 그리고 그 위의 접힌 파랑에서.\u003c/p>\n\u003cp>“나 네 이름 알아. 뤼시엔이지?”\u003c/p>\n\u003cp>뤼시엔의 미간이 아주 조금 더 좁아졌다. 이미 좁아질 대로 좁아진 미간이었다.\u003c/p>\n\u003cp>그 이름을 소리 내어 부르는 사람은 이 집에 없었다. 가정교사는 도련님, 하인들은 젊은 주인님이라 불렀고, 부모는 애초에 그를 부를 일이 드물었다. 세례 때 받은 이름은 족보와 성당 장부 속에 얌전히 눌려 있기만 하는 것이었다.\u003c/p>\n\u003cp>이상한 기분이었다. 오래 닫아 둔 방의 덧창을 누가 허락도 없이 활짝 열어젖힌 것 같은. 들이친 바람이 상쾌한지 무례한지 가늠하기도 전에, 이미 커튼이 펄럭이고 있었다.\u003c/p>\n\u003cp>‘무례하군.’\u003c/p>\n\u003cp>“··· 처음 보는 사이에 이름부터 부르는 건 예의가 아니야.”\u003c/p>\n\u003cp>“그럼 뭐라고 불러?”\u003c/p>\n\u003cp>“······.”\u003c/p>\n\u003cp>막상 대답하려니 마땅한 것이 없었다. 카스텔란이라 부르라 하기엔 그것은 파리에 있는 그 사람의 이름 같았다. 도련님이라 부르라 하기엔 이 아이는 하인이 아니었다.\u003c/p>\n\u003cp>“··· 그냥 네 마음대로 불러.”\u003c/p>\n\u003cp>대답을 고민하는 짧은 사이 아이는 이미 결론을 내린 참이다. 혀끝으로 사탕을 굴리듯 한 음절씩 천천히 굴려서, 그 이름이 원래 그렇게 발음되는 것이었나 싶게 만들었다.\u003c/p>\n\u003cp>“뤼시엔. 이름 예쁘다.”\u003c/p>\n\u003cp>예쁘다니. 사내 이름에.\u003c/p>\n\u003cp>뤼시엔은 입을 다물었다. 정정할 말을 고르는 사이 이미 두 번이나 불려 버린 이름은 되돌릴 방법이 없었다. 쏟은 물을 손으로 주워 담는 것만큼이나 부질없는 일이었다. 대신 그는 그 이름이 불릴 때마다 미간을 아주 조금씩 찌푸리는 것으로 불쾌를 표하기로 했다.\u003c/p>\n\u003cp>아이는 그것을 알아채지 못했거나, 알아채고도 개의치 않았다. 아마 후자였을 것이다. 어쩌면 그 찌푸림을 보려고 일부러 더 자주 불렀을지도 모른다.\u003c/p>\n\u003cp>“나는 릴리아나. 릴리아나 아델라이데 디 발디에리. 근데 다들 릴리라고 불러.”\u003c/p>\n\u003cp>“그래, 발디에리 영애.”\u003c/p>\n\u003cp>“아니이, 그러니까 릴리! 라고 불러야지.”\u003c/p>\n\u003cp>“싫어.”\u003c/p>\n\u003cp>“왜? 나는 뤼시엔이라고 부르는데.”\u003c/p>\n\u003cp>“그건 네가 멋대로 부르는 거고.”\u003c/p>\n\u003cp>릴리아나는 그 대답이 몹시 불공평하다는 듯 볼을 부풀렸다. 하지만 오래가지는 않았다. 이 아이에게 불만은 사흘을 버티는 감정이 아니라, 세 걸음이면 잊히는 날씨 같은 것인 모양이었다. 그녀는 머리에 꽂은 마거리트를 한 번 매만지고는, 대단한 비밀이라도 털어놓듯 목소리를 낮췄다.\u003c/p>\n\u003cp>“엄마가 그러는데, 우리 크면 결혼하는 거래.”\u003c/p>\n\u003cp>“그건 아직 모르는 거지. 아직 혼담이 오가는 거지, 결정된 건 아니잖아?”\u003c/p>\n\u003cp>“그러니까아, 방금 정했대.”\u003c/p>\n\u003cp>말문이 막힌 것은 태어나 처음이었다.\u003c/p>\n\u003cp>뤼시엔은 잠시 생각했다. 어른들이 정했다면 더 따질 구석이 없다.\u003c/p>\n\u003cp>“··· 그럼 그런 거겠지.”\u003c/p>\n\u003cp>릴리아나가 웃었다. 이번에도 빠진 이가 보였다. 웃는 바람에 머리에 꽂은 마거리트가 기울어 한쪽 귀 위로 미끄러졌고, 흰 꽃잎 하나가 떨어져 그녀의 어깨에 얹혔다. 뤼시엔은 그 꽃잎이 바람에 날아갈 때까지, 그것을 내내 보고 있었다.\u003c/p>\n\u003cp>그리도 질색하던 향의 오렌지꽃은 그날 저녁 손님들이 돌아갈 때까지 그의 단춧구멍에 꽂혀 있었다. 차양 아래로 돌아온 아들의 가슴팍을 본 백작부인이 잠시 눈썹을 들어 올렸지만 아무 말도 하지 않았다. 마차에 오르기 직전, 릴리아나는 창밖으로 고개를 내밀어 그 꽃이 아직 거기 있는지 확인하고는 만족스럽게 웃었다.\u003c/p>\n\u003cp>마차가 정문을 빠져나간 뒤에야 뤼시엔은 꽃을 버렸으나, 그날 밤 재킷에 밴 향이 좀처럼 빠지지 않아 그는 어둠 속에서 오래 눈을 뜨고 있었다.\u003c/p>\n\u003cp>그날 이후로 뤼시엔은 그 빠진 앞니를 오래도록 기억했다. 왜 그것을 기억하는지는 생각해 본 적이 없다. 다만 이듬해 봄 다시 만난 그녀의 빈자리에 새 이가 하얗게 돋아 있는 것을 보았을 때, 어딘가 조금 손해를 본 것 같은 기분이 들었다. 눈은 그대로였다. 그것만은 조금 다행이라고 여겼다. 왜 다행인지도 생각해 본 적은 없다.\u003c/p>\n\u003cp>그 봄에도 그녀는 그의 단춧구멍에 꽃을 꽂았다. 이번에는 라일락이었다. 그는 이번에도 빼지 않았다.\u003c/p>\n\u003cp>혼약은 문서 없이 정해졌다. 양가의 어른이 차양 아래에서 차를 한 잔 더 마셨을 뿐이었다. 남부의 오래된 집안끼리는 그 정도로 충분했다.\u003c/p>\n\u003cp class=\"sep\" aria-label=\"장면 전환\">\u003cspan>✦\u003c/span>\u003c/p>\n\u003cdiv class=\"gap s2\">\u003c/div>\n\u003cp>릴리아나는 니스의 수녀원 기숙학교로 들어갔다. 사보이아 쪽 귀족 집안의 딸들이 대개 그랬듯이. 겨울이면 사육제를 보러 니스의 본가로 돌아갔고, 사교 시즌이면 부모를 따라 엑상프로방스에 들렀다. 그 사이사이 편지가 왔다.\u003c/p>\n\u003cp>편지는 하인이 은쟁반에 받쳐 서재로 가져왔다. 하인이 봉랍을 뜯어 책상 위에 펼쳐 놓으면, 뤼시엔은 의자에 등을 기댄 채 그것을 내려다보며 읽었다. 종이에 손을 대는 것은 하인의 일이었다. 그는 읽기만 했다.\u003c/p>\n\u003cp>봉투가 열리는 순간마다 냄새가 먼저 피어올랐다. 수녀원 예배당에 배어 있을 밀랍과 유향, 그리고 그 위에 일부러 덧씌운 것이 분명한 꽃향기. 어느 달은 라벤더였고, 어느 달은 장미였고, 어느 달은 그해 봄 정원에서 맡았던 그 오렌지꽃이었다. 닫혀 있던 서재 공기가 그 향을 머금고 무겁게 내려앉았다. 봉투를 열 때마다 하인이 슬그머니 창문 쪽을 살폈다.\u003c/p>\n\u003cp>릴리아나의 편지는 길었다.\u003c/p>\n\u003cp>수녀원에서 익힌 단정한 필체로 흠잡을 데 없는 문장이 넉 장이고 다섯 장이고 이어졌다. 성가대에서 혼자 반 박자 빨리 들어갔다가 시몬 수녀님께 꾸중을 들은 이야기, 성당 고양이가 새끼를 다섯 마리나 낳은 이야기, 정원에 새로 심은 꽃이 사흘 만에 고개를 숙여 버린 이야기, 사육제 가면을 고르느라 이틀을 꼬박 고민한 이야기. 글씨와 문장은 영락없는 귀족 숙녀의 것이었으나, 내용은 정원에 쪼그려 앉아 꽃 냄새를 맡던 아이 그대로였다. 둥글게 말려 올라가는 글자 꼬리마다 웃음소리가 매달려 있는 것 같았다.\u003c/p>\n\u003cp>잉크는 늘 짙은 청색이었다.\u003c/p>\n\u003cp>그리고 편지 끝에는 어김없이 마른 꽃잎이 끼워져 있었다. 눌려서 종잇장처럼 얇아진 꽃잎은 촛불에 비추면 잎맥이 실핏줄처럼 드러났다. 갓 말린 것들로만 골랐는지, 꽃잎에서는 편지지보다 한층 진한 냄새가 났다.\u003c/p>\n\u003cp>‘··· 이번엔 또 장미로군.’\u003c/p>\n\u003cp>뤼시엔은 꽃잎을 치우라고 명하는 대신 창을 조금 열라고 명했다. 하인은 이제 편지가 오는 날이면 명을 듣기도 전에 창문 고리에 손을 올려 두었다.\u003c/p>\n\u003cp>답장은 고작 한 장. 그것도 반 장쯤은 여백이었다.\u003c/p>\n\u003cdiv class=\"gap s2\">\u003c/div>\n\u003cdiv class=\"letter\">\n\u003cp>\u003ci>릴리아나에게.\u003c/i>\u003c/p>\n\u003cp>\u003ci>지난달 라틴어 시험에서 수석을 했다.\u003c/i>\u003c/p>\n\u003cp>\u003ci>펜싱 교사를 바꿨다. 전임자는 발이 느렸거든.\u003c/i>\u003c/p>\n\u003cp>\u003ci>마르세유의 창고를 보러 갔다. 올리브유 통이 장부보다 두 개 적었다.\u003c/i>\u003c/p>\n\u003cp>\u003ci>건강하길.\u003c/i>\u003c/p>\n\u003cdiv class=\"gap s1\">\u003c/div>\n\u003cp class=\"r\">\u003ci>1827. 3. 2.\u003c/i>\u003c/p>\n\u003cp class=\"r\">\u003ci>뤼시엔 드 카스텔란.\u003c/i>\u003c/p>\n\u003c/div>\n\u003cdiv class=\"gap s2\">\u003c/div>\n\u003cp>보름 뒤에 온 답장은 평소보다 한 장이 짧았다. 대신 첫 줄의 글씨가 평소보다 컸다.\u003c/p>\n\u003cp>「뤼시엔. 이건 편지가 아니라 장부야.」\u003c/p>\n\u003cp>그 아래로는 창고의 올리브유 통이 두 개 모자란 것이 자기와 무슨 상관이냐, 수석을 한 건 축하하지만 축하해 달라는 말도 없이 써 놓으니 축하할 맛이 안 난다, 다음에는 통 개수 말고 당신 이야기를 쓰라, 날씨라도 좋다, 하는 문장들이 흐트러짐 없는 필체로 따박따박 이어졌다. 화가 났는데도 글씨는 끝까지 반듯했다. 다만 펜을 얼마나 꾹꾹 눌러 썼는지 종이 뒷면까지 글자 자국이 오돌토돌하게 솟아 있었다. 수녀원 교육이란 참 대단한 것이었다.\u003c/p>\n\u003cp>그 편지에 든 꽃잎은 유난히 향이 짙었다. 봉투가 열리자마자 서재가 통째로 오렌지 과수원에 잠겼다.\u003c/p>\n\u003cp>‘··· 날씨라.’\u003c/p>\n\u003cp>뤼시엔은 열린 창으로 들어오는 바람에 기대어 숨을 고르며, 그 오돌토돌한 뒷면을 한참 내려다보다가 다음 답장을 썼다.\u003c/p>\n\u003cdiv class=\"gap s2\">\u003c/div>\n\u003cdiv class=\"letter\">\n\u003cp>\u003ci>릴리아나에게.\u003c/i>\u003c/p>\n\u003cp>\u003ci>엑상프로방스는 맑았다.\u003c/i>\u003c/p>\n\u003cp>\u003ci>기하학 교사가 감기에 걸려 수업이 사흘 비었다.\u003c/i>\u003c/p>\n\u003cp>\u003ci>그동안 선단 목록을 읽었다. 배 이름이 촌스럽다.\u003c/i>\u003c/p>\n\u003cp>\u003ci>지난번 꽃은 향이 지나쳤다.\u003c/i>\u003c/p>\n\u003cp>\u003ci>건강하길.\u003c/i>\u003c/p>\n\u003cdiv class=\"gap s1\">\u003c/div>\n\u003cp class=\"r\">\u003ci>1827. 4. 9.\u003c/i>\u003c/p>\n\u003cp class=\"r\">\u003ci>뤼시엔 드 카스텔란.\u003c/i>\u003c/p>\n\u003c/div>\n\u003cdiv class=\"gap s2\">\u003c/div>\n\u003cp>「날씨를 쓰라고 했지, 날씨를 한 줄 쓰라고는 안 했어.」\u003c/p>\n\u003cp>그다음 편지의 첫 줄이었다. 이번에는 밑줄까지 그어져 있었다. 그런데 편지 맨 끝, 추신 자리의 글씨는 웃음을 참으면서 쓴 것처럼 살짝 삐뚤어져 있었다.\u003c/p>\n\u003cp>「추신. 그래도 버리진 않았지? 다 알아.」\u003c/p>\n\u003cp>꽃잎은 이번에도 들어 있었다.\u003c/p>\n\u003cp>그 일이 몇 해 동안 이어졌다. 릴리아나가 다섯 장을 보내면 뤼시엔은 한 장을 답했다. 릴리아나는 그 한 장을 조목조목 따지는 편지를 다시 다섯 장 보냈고, 뤼시엔은 거기에 날씨 한 줄을 더한 한 장을 보냈다. 누가 먼저 그만둘 기색은 보이지 않았다. 그녀가 아무리 심통을 부려도 편지 끝의 꽃잎은 한 번도 빠진 적이 없었다. 그가 아무리 향이 지나치다고 적어도 편지봉투에 동봉된 꽃잎의 향기는 갈수록 진해지기만 했다.\u003c/p>\n\u003cp>갓 도착한 편지는 늘 서재를 한바탕 꽃밭으로 만들었지만 으레 죽은 것들이 그렇듯, 향은 금세 희미해졌으며 바싹 마른 종이 냄새에 섞여 분간이 되지 않았다. 반년이 지나면 남는 것은 얇고 바스락거리는 빛바랜 꽃잎뿐이었다.\u003c/p>\n\u003cp>향이 빠졌으니 거슬릴 것도 없었다. 그러니 굳이 버릴 이유도 없다. 뤼시엔은 그렇게 생각했고, 그 생각을 핑계 삼아 하인들에게 서랍을 비우라고 명하지 않았다. 하인들은 새 편지가 올 때마다 향이 다 빠진 지난 편지들 위에 그것을 차곡차곡 얹어 두었다. 맨 위의 것이 조용해지면 그 위에 또 새것이 얹혔다.\u003c/p>\n\u003cp>서재 서랍 한 칸이 점점 편지로 차올랐다.\u003c/p>\n\u003cp class=\"sep\" aria-label=\"장면 전환\">\u003cspan>✦\u003c/span>\u003c/p>\n\u003cdiv class=\"gap s2\">\u003c/div>\n\u003cp>뤼시엔이 열한 살 되던 해, 망명 귀족 보상금이 나왔다.\u003c/p>\n\u003cp>혁명기에 땅을 잃은 귀족들에게, 돌려주지 못한 땅 대신 나라가 국채로 갚아 주는 돈이었다. 의회에서는 십억 프랑을 귀족들 주머니에 넣어 준다며 시끄러웠지만 명망있는, 오래도록 권세가 높았던 카스텔란가의 식탁에서는 그런 천박한 이야기가 오가지는 않았다.\u003c/p>\n\u003cp>그해 겨울, 아버지는 오랜만에 저택에 들렀다. 기분이 좋았고, 목소리가 컸고, 저녁 식탁에서 포도주를 세 병이나 비웠다. 탐욕스런 붉은 포도주가 크리스털 잔 안에서 끈적하게 맴돌다 잔 벽을 타고 느리게 흘러내렸다. 그리고 그는 아들에게 처음으로 무엇을 갖고 싶으냐고 물었다.\u003c/p>\n\u003cp>뤼시엔은 대답하지 않았다.\u003c/p>\n\u003cp>갖고 싶은 것이 없어서가 아니었다. 무엇을 말해야 아버지가 원하는 대답이 되는지 가늠이 서지 않았기 때문이었다. 아버지는 대답을 기다리지 않았다. 아들의 침묵을 겸손으로 여기고는 껄껄 웃으며 백작부인에게 술잔을 들어 보였다.\u003c/p>\n\u003cp>아버지가 다시 파리로 떠난 뒤 그 천문학적인 보상금은 런던의 어느 남미 광산 채권이 되었다. 이듬해 봄, 런던에서 은행 여러 곳이 연달아 문을 닫았다는 소식이 왔다. 채권은 종잇조각이 되었다.\u003c/p>\n\u003cp>뤼시엔은 그 사실을 신문이 아니라 어머니의 보석함으로 먼저 알아챘다.\u003c/p>\n\u003cp>저녁 식탁에서 늘 같은 자리를 지키던 사파이어 목걸이가 어느 날 진주로 바뀌었고 한 달 뒤에는 진주마저도 없었다. 그다음은 에메랄드 귀걸이, 그다음은 할머니의 것이었다는 카메오 브로치. 어머니는 아무 말도 하지 않았고, 아들도 구태여 연유를 묻지 않았으므로 식탁 위에는 은포크 소리만 남았다.\u003c/p>\n\u003cp>뤼시엔은 조용히 보석이 사라지는 순서를 외웠다.\u003c/p>\n\u003cp>사파이어, 진주, 에메랄드, 카메오. 아버지의 편지가 늦게 온 달과 날짜가 정확히 겹쳤다. 날짜가 맞아떨어진다는 것이 그토록 싫었던 적은 그 전에도, 그 후에도 없었다.\u003c/p>\n\u003cp>마지막으로 카메오가 사라진 날 저녁, 어머니의 쇄골 사이 오목한 자리는 그냥 비어 있었다. 촛불이 흔들려도 그 자리에서는 아무것도 반짝이지 않았다.\u003c/p>\n\u003cp>그날 밤 그는 편지가 가득 쌓인 서랍을 열어보았다.\u003c/p>\n\u003cp>아무 냄새도 나지 않았다. 몇 해 동안 쌓인 꽃잎들은 하나같이 향을 잃은 채 편지 사이사이에 납작하게 눌려 있었다. 그 꽃잎들이 한때 얼마나 지독한 냄새를 풍겼는지, 그는 하나하나 기억하고 있었다. 기억하고 있다는 사실이 조금 이상했다.\u003c/p>\n\u003cp>하인이 맨 위의 편지를 꺼내 펼쳐 놓았다. 짙은 청색 잉크가 촛불 아래에서 젖은 것처럼 빛났다. 무엇이 적혀 있었는지는 기억나지 않는다. 그는 글자를 읽지 않고 그 색만 오래 내려다보았다. 향은 빠져도 색은 빠지지 않았다. 이 집에서 사라지지 않은 파랑은 이제 그것뿐이었다.\u003c/p>\n\u003cp>열두 살에는 엑상프로방스의 왕립 콜레주에 들어간 뤼시엔은 거기서 처음으로 집 밖에서 사람의 값이 어떻게 매겨지는지 보았다. 동급생들의 아버지가 어떤 사람들인지, 어떤 집이 국채를 얼마나 쥐고 있는지, 어떤 이름이 뒤에서 낮게 불리는지. 카스텔란이라는 이름은 그들 사이에서 아직까지도 명망있는, 오래된 귀족가였다. 다만 그 이름 뒤에 붙는 ‘백작님은 요즘 파리에서···’ 하는 말끝이 미묘하게 흐려지는 것을, 뤼시엔은 놓치지 않았다.\u003c/p>\n\u003cp class=\"sep\" aria-label=\"장면 전환\">\u003cspan>✦\u003c/span>\u003c/p>\n\u003cdiv class=\"gap s2\">\u003c/div>\n\u003cp>열네 살이 된 릴리아나는 여전히 시끄러웠다.\u003c/p>\n\u003cp>키는 한 뼘쯤 자랐고 멋대로 흙장난하던 시절이 지나 드레스 자락은 더는 흙바닥에 닿지 않았다. 볕에 그을렸던 뺨은 수녀원 담장 안에서 몇 해를 보내는 사이 우윳빛으로 바래 있었다. 제멋대로 뻗치던 밤색 머리카락도 이제는 단정하게 땋아 올려 핀으로 고정되어 있었다. 다만 목덜미 쪽의 잔머리 몇 가닥만은 여전히 핀의 말을 듣지 않고 동그랗게 말려 있었다. 수녀원 교육 덕인지 무릎을 굽혀 인사하는 각도만큼은 흠잡을 데가 없었다. 문제는 인사가 끝나는 순간부터였다.\u003c/p>\n\u003cp>인사를 마친 그녀는 숙녀다운 몸짓으로 한 걸음 다가와, 숙녀답지 않은 손놀림으로 그의 단춧구멍에 치자꽃 한 송이를 꽂았다. 시엔은 턱을 조금 들고 숨을 얕게 쉬었다. 그 얼굴을 확인한 릴리아나의 입꼬리가 만족스럽게 올라갔다.\u003c/p>\n\u003cp>“뤼시엔, 키가 또 컸네. 근데 얼굴은 더 뾰족해졌어. 콜레주 밥이 맛이 없나 봐. 수녀원 밥도 맛없어. 수요일마다 렌틸콩 수프가 나오는데 꼭 진흙 맛이 나. 그래서 내가 시몬 수녀님한테···.”\u003c/p>\n\u003cp>칠 년째 듣는 이름이었다. 미간에 실금이 갔다. 치자꽃 향 때문인지 이름 때문인지는 그도 알 수 없었다.\u003c/p>\n\u003cp>‘숨은 언제 쉬는 거지.’\u003c/p>\n\u003cp>사교 시즌의 엑상프로방스, 어느 귀족가 살롱 한쪽 구석이었다. 샹들리에의 촛불 수백 개가 공기를 데워 실내는 늦봄인데도 후텁지근했다. 분과 향수와 녹은 밀랍 냄새가 뒤섞여 천장 아래 낮게 고여 있었고, 그 위에 그의 가슴팍에서 피어오르는 치자꽃 향이 진득하게 한 겹 더 얹혔다. 어른들이 카드 테이블에 둘러앉아 있는 동안 아이들은 창가로 밀려나 있었다. 뤼시엔은 창틀에 등을 기대지도 않고 꼿꼿이 선 채, 끝도 없이 이어지는 렌틸콩 수프 이야기를 듣는 둥 마는 둥 하고 있었다.\u003c/p>\n\u003cp>그러다 문득 그녀의 말이 멎었다.\u003c/p>\n\u003cp>시선을 따라가 보니 카드 테이블 너머에 그의 어머니가 앉아 있었다. 그날 백작부인의 목에는 아무것도 걸려 있지 않았다. 레이스 깃만이 하얗게 목을 감싸고 있었다.\u003c/p>\n\u003cp>릴리아나는 그 빈 목을 한참 바라보았다.\u003c/p>\n\u003cp>그 얼굴이 낯설었다. 렌틸콩 수프를 흉보던 입술은 다물려 있었고, 쉴 새 없이 움직이던 눈은 한곳에 멈춰 있었다. 샹들리에 불빛이 그녀의 속눈썹에 걸려 뺨 위로 가느다란 그림자를 드리웠다. 그 그림자 아래에서 파란 눈이 촛불을 머금은 채 고요하게 가라앉아 있었다. 정원에서 찰랑이던 얕은 바다가 아니었다. 바닥이 보이지 않는 깊은 심해를 닮은 눈. 속눈썹이 드리운 그림자가 아주 조금 떨렸다. 뤼시엔은 칠 년 동안 그녀가 그런 얼굴을 할 줄 안다는 것을 몰랐다.\u003c/p>\n\u003cp>그러고는 그녀가 아무렇지 않게 고개를 돌려 창밖을 가리켰다.\u003c/p>\n\u003cp>“저기 저 집 담장에 핀 거 봤어? 흰 거. 저건 냄새가 정말 지독해. 다음에 편지봉투에 넣을 꽃은 저걸로 할까 봐.”\u003c/p>\n\u003cp>목소리는 다시 렌틸콩 수프를 이야기하던 그 목소리였다. 눈도 다시 얕아져 있었다. 장난기가 찰랑찰랑 차올라 있었다. 마치 방금 전의 얼굴은 촛불이 잠깐 잘못 비춘 것뿐이라는 듯.\u003c/p>\n\u003cp>뤼시엔은 대답하지 않았다. 그녀가 무엇을 보았는지, 왜 화제를 돌렸는지. 그런 것을 따져 볼 생각은 하지 않았다. 릴리아나는 원래 그런 아이였다. 금세 관심이 옮겨가고 깊은 고민을 하지 않는.\u003c/p>\n\u003cp>그렇게 믿는 편이 편했다.\u003c/p>\n\u003cp>그런데도 그날 밤, 그는 잠자리에 누워서 그 떨리던 속눈썹 그림자와 그 아래 가라앉아 있던 파랑을 오래 생각했다. 의자 등받이에 걸어 둔 재킷에서 치자꽃 향이 어둠 속으로 천천히 번져 왔다. 생각하고 있다는 것을 깨닫고는 반듯한 자세를 뒤척여 보았어도 그 색은 눈꺼풀 안쪽에 그대로 남아 있었다. 그 지독한 향까지도.\u003c/p>\n\u003cp>여름, 사교 시즌이 끝나 갈 무렵, 미사가 끝난 생소뵈르 대성당 앞 계단에서 그는 릴리아나를 다시 보았다. 그녀는 하녀가 든 바구니에서 빵을 꺼내 계단 아래 웅크린 아이들에게 하나씩 나눠 주고 있었다. 맨손이었다. 땟국물이 흐르는 손들이 그녀의 손끝을 스치며 빵을 받아 갔다. 갓 구운 빵 냄새가 축축한 돌계단을 타고 위까지 따뜻하게 올라왔다.\u003c/p>\n\u003cp>뤼시엔은 마차에 오르기 전 계단 위에서 그 광경을 내려다보았다.\u003c/p>\n\u003cp>‘저 손으로 나중에 성수를 찍겠군.’\u003c/p>\n\u003cp>그녀가 고개를 들어 그를 발견하고는 빵 부스러기가 묻은 손을 붕붕 흔들었다. 정오의 볕 속에서 흩날린 부스러기가 금가루처럼 반짝였고, 그 아래에서 파란 눈이 하늘을 그대로 담아 한층 더 밝게 빛났다. 뤼시엔은 마차 문을 닫았다. 닫힌 문 너머로도 그 반짝임이 잠시 눈에 남았다.\u003c/p>\n\u003cp class=\"sep\" aria-label=\"장면 전환\">\u003cspan>✦\u003c/span>\u003c/p>\n\u003cdiv class=\"gap s2\">\u003c/div>\n\u003cp>1830년 7월, 파리에서 사흘 동안 총성이 그치지 않았다는 소식이 남쪽까지 내려왔다.\u003c/p>\n\u003cp>국왕이 의회를 해산하고 신문의 입을 묶어 버리자 파리 시민들이 거리로 쏟아져 나왔다. 사흘째 되던 날 국왕은 파리를 버리고 떠났다. 영광의 사흘. 훗날 일컬어질 위대한 역사의 한 페이지였다. 비록 지난 날을 새까맣게 잊은 프로방스의 왕당파 살롱에서는 고작 개미들의 외침따위로 여겼지만 말이다.\u003c/p>\n\u003cp>그해 여름은 유난히 더웠다. 매미 소리가 플라타너스 가로수마다 들러붙어 해가 져도 떨어지지 않았고, 저택의 돌벽은 낮 동안 머금은 열기를 밤새 천천히 뱉어 냈다. 공기가 꿀처럼 무겁게 고여, 숨을 쉴 때마다 그 무게가 폐 안쪽까지 끈적하게 들어찼다. 셔츠 깃 안쪽에 밴 땀은 마르지도 못하고 미지근하게 들러붙었다가, 밤바람에 식어 다시 살갗을 죄었다.\u003c/p>\n\u003cp>한동안 연락이 닿지 않던 아버지의 소식이 당도한 날이었다.\u003c/p>\n\u003cp>전령이 가져온 공식 서한에는 카스텔란 백작이 혼란 속에서 국왕 폐하의 대의를 끝까지 지키다 쓰러졌다고 적혀 있었다. 문장이 아름다웠다. 충성이니 대의니 하는 단어들이 줄마다 반짝였다.\u003c/p>\n\u003cp>그의 아버지는 팔레루아얄 회랑의 도박장에서 밤새 판을 벌이다가 새벽녘 나오던 길에 거리로 쏟아진 군중에 휩쓸렸다. 바리케이드에서 날아온 것인지 근위대 쪽에서 날아온 것인지 모를 총알 한 발이에 나동그라진 것이다. 시신은 회랑 기둥 아래에서 발견되었고, 주머니에는 서명이 채 마르지 않은 차용증 넉 장과 동전 몇 닢이 들어 있었을 뿐이다.\u003c/p>\n\u003cp>더러운 진상을 감싼 포장지가 제법 그럴싸했다.\u003c/p>\n\u003cp>백작부인은 무엄하게도, 왕궁에서 온 서한을 여름임에도 불을 지펴 둔 서재 난로에 넣었다. 종이가 오그라들며 타는 동안 그녀는 등을 곧게 편 채 그 앞에 서 있었다. 난로의 열기와 바깥의 열기가 한데 엉겨 서재 안이 숨 막히게 뜨거웠는데도, 그녀의 이마에는 땀 한 방울 맺히지 않았다. 불꽃이 잦아든 뒤에야 아들을 돌아보았다.\u003c/p>\n\u003cp>“네 아버지는 국왕 폐하를 위해 돌아가셨다.”\u003c/p>\n\u003cp>그것이 카스텔란가에서 처음 본 장부 조작이었다.\u003c/p>\n\u003cp>열여섯 살의 아들은 난로 속 재를 바라보다가 고개를 끄덕였다. 재는 아직 붉은 테두리를 두른 채 천천히 오그라들고 있었다. 난로의 열기가 얼굴에 닿아 눈가가 따가웠다. 마지막 불씨가 꺼질 때까지 그는 눈을 돌리지 않았다.\u003c/p>\n\u003cp class=\"sep\" aria-label=\"장면 전환\">\u003cspan>✦\u003c/span>\u003c/p>\n\u003cdiv class=\"gap s2\">\u003c/div>\n\u003cp>장례 미사는 성대했다.\u003c/p>\n\u003cp>생소뵈르 대성당의 신자석이 남부 왕당파 집안의 검은 옷으로 가득 찼다. 새 왕에게 등을 돌린 이들에게 쫓겨난 국왕을 위해 쓰러진 백작의 장례는 좋은 구실이었다. 다들 영웅의 아들을 보는 눈으로 뤼시엔을 보았다. 젊은 나이에 안타깝게도, 아버님을 꼭 닮았구나, 카스텔란의 피는 역시.\u003c/p>\n\u003cp>뤼시엔은 그 눈길을 하나도 빠짐없이 받아 냈다.\u003c/p>\n\u003cp>등을 곧게 펴고, 목소리를 낮추고, 아무에게도 먼저 손을 내밀지 않았다. 조문객이 위로의 뜻으로 어깨에 손을 얹으려 하면 반걸음 비켜서며 고개를 숙였다. 무례하지 않을 만큼 정중했고, 다가설 수 없을 만큼 정확했다. 아버지를 꼭 닮았다는 말을 들을 때마다 어금니가 소리없이 맞물렸으나 다음 조문객이 다가오기 전에 가라앉았다. 아무도 그것을 알아채지 못했다.\u003c/p>\n\u003cp>향 냄새가 지독했다. 제단 앞을 뒤덮은 백합이 한여름 열기에 축 늘어진 채, 짓무른 과일처럼 들척지근한 향을 끝도 없이 뿜어내고 있었다. 그 향이 유향 연기와 엉겨 목구멍 안쪽에 진득하게 들러붙었다. 수백 개의 촛불에서 녹아내린 밀랍이 촛대를 타고 흘러 굳어 가는 냄새, 검은 모직 상복 아래로 배어 나오는 조문객들의 땀 냄새까지. 뤼시엔은 숨을 얕게 쉬었다. 깊게 들이쉬면 그 모든 것이 폐 속까지 따라 들어올 것 같았다.\u003c/p>\n\u003cp>릴리아나는 맨 뒷줄에 앉아 있었다. 검은 베일 아래로 얼굴이 잘 보이지 않았다. 오늘만큼은 그녀도 조용했다. 아마 태어나서 가장 오래 입을 다물고 있던 날이었을 것이다.\u003c/p>\n\u003cp>미사가 끝나고 사람들이 하나둘 성당을 빠져나갈 무렵 그녀가 다가왔다. 뤼시엔은 그녀가 무슨 말을 할지 알 것 같았다. 유감이라든가, 훌륭한 분이셨다든가. 오늘 하루 귀에 못이 박이도록 들은 말들.\u003c/p>\n\u003cp>그녀의 손에는 꽃이 없었다. 칠 년 만에 처음으로, 그녀를 마주하는 날임에도 그의 단춧구멍은 비어 있었다.\u003c/p>\n\u003cp>“울어도 돼, 뤼시엔.”\u003c/p>\n\u003cp>그녀는 그렇게 말했다. 목소리가 작았다. 그 말이 나올 때 그녀의 숨결에 얇은 베일 자락이 아주 조금 부풀었다가 가라앉았다.\u003c/p>\n\u003cp>뤼시엔은 그녀를 내려다보았다. 언제 이렇게 키 차이가 나게 되었는지. 정원에서 까치발을 들고 그의 가슴팍에 꽃을 꽂던 아이를 내려다볼 때와는 각도가 달랐다.\u003c/p>\n\u003cp>“울 일이 아니야.”\u003c/p>\n\u003cp>“그래도.”\u003c/p>\n\u003cp>베일 아래에서 그녀의 손이 조금 들렸다. 그의 소매 쪽이었다. 뤼시엔은 움직이지 않았다. 피하지도 받아 주지도 않은 채 그저 그 손을 내려다보았다. 검은 장갑에 싸인 가느다란 손가락이 그의 소매에서 한 뼘쯤 떨어진 허공에 멈춰 있었다. 손은 잠시 머뭇거리다가 다시 그녀의 검은 치맛자락 위로 내려갔다. 내려간 손끝이 치맛자락을 한 줌 구겨 쥐었다.\u003c/p>\n\u003cp>“카스텔란가 당주는 그런 걸로 울지 않아.”\u003c/p>\n\u003cp>그 말을 뱉은 순간에야 뤼시엔은 자신이 처음으로 그 호칭을 입에 올렸다는 것을 깨달았다. 당주. 아버지가 하룻밤 판돈과 바꿔 버린 자리. 이제 제 것이 된 자리. 그 단어가 혀끝에 쇠붙이처럼 차갑게 남았다.\u003c/p>\n\u003cp>릴리아나도 알아들었다. 그녀는 더 말하지 않았다. 다만 베일 아래에서 오래도록 그를 올려다보았다. 성당 문으로 들어온 한낮의 볕이 그녀 등 뒤에서 하얗게 부서졌다.\u003c/p>\n\u003cp class=\"sep\" aria-label=\"장면 전환\">\u003cspan>✦\u003c/span>\u003c/p>\n\u003cdiv class=\"gap s2\">\u003c/div>\n\u003cp>장례 이틀 뒤, 공증인과 집사가 서재 책상 위에 장부를 쌓았다.\u003c/p>\n\u003cp>아버지 대의 장부였다. 가죽 표지가 닳아 모서리가 허옇게 일어나 있었고, 몇 권은 물에 젖었다 마른 듯 종이가 물결쳐 있었다. 펼치기도 전에 퀴퀴한 냄새가 올라왔다. 담배와 싸구려 향수와, 오래 닫아 둔 서랍의 냄새. 어떤 장에는 술잔을 내려놓았던 자국이 둥글게 번져 갈색 고리로 말라붙어 있었다.\u003c/p>\n\u003cp>공증인이 목소리를 낮췄다.\u003c/p>\n\u003cp>“당분간은 백작부인께서 후견을 맡으시고, 도련님께서 성년이 되실 때까지는 저희가···.”\u003c/p>\n\u003cp>“넘기게.”\u003c/p>\n\u003cp>공증인의 말이 멎었다. 소년은 장부에서 눈을 떼지 않은 채 같은 말을 되풀이했다.\u003c/p>\n\u003cp>“첫 장부터 넘기게.”\u003c/p>\n\u003cp>카스텔란의 당주가 제 눈으로 장부를 들여다본 적은 지금껏 없었다. 장부란 대리인이 정리하고 공증인이 요약하면, 당주는 맨 끝의 숫자 한 줄만 듣는 것이었다. 소년은 그 숫자 한 줄로는 아무것도 알 수 없다는 것을 이미 알고 있었다.\u003c/p>\n\u003cp>공증인과 집사가 눈빛을 주고받았다. 잠시 뒤 집사가 앞으로 나서서 장부의 표지를 열었다. 뤼시엔은 의자에 등을 붙인 채 미동도 없이 앉아, 집사가 넘겨 주는 대로 한 장 한 장 내려다보았다. 손끝 하나 종이에 대지 않았다.\u003c/p>\n\u003cp>붉은 잉크가 검은 잉크보다 많았다.\u003c/p>\n\u003cp>촛불 아래에서 그 붉은색은 잉크라기보다 오래되어 굳은 피 같았다. 줄마다 엉겨 붙은 숫자들이 종이 위에 딱지처럼 앉아 있었다.\u003c/p>\n\u003cp>저당 잡힌 영지 둘. 헐값에 넘어간 뤼베롱의 숲 하나. 이름도 처음 듣는 사람들 앞으로 줄줄이 달린 명예의 빚. 법정에서 받아 낼 수는 없지만 갚지 않으면 이름이 썩는 돈이었다. 그 아래로 대대로 이어 온 마르세유의 항구 창고와, 반쯤 비어 있는 선단의 목록이 초라하게 붙어 있었다.\u003c/p>\n\u003cp>어머니의 보석도 거기 있었다. 사파이어, 진주, 에메랄드, 카메오. 전당포의 이름과 날짜와 금액까지. 순서도 날짜도 그가 외워 둔 것과 한 치도 다르지 않았다. 바다를 한 움큼 얼려 놓은 것 같던 그 푸른 돌은 장부 위에서 고작 한 줄짜리 숫자였다.\u003c/p>\n\u003cp>숫자는 정직했다.\u003c/p>\n\u003cp>사람이 거짓말을 할 때에도 숫자는 거짓말을 하지 않았다. 아버지가 무엇을 잃었는지, 어머니의 목이 왜 비어 있었는지, 국왕 폐하를 위해 쓰러졌다는 그 아름다운 문장이 실로, 얼마짜리였는지. 전부 거기 적혀 있었다. 난로에 넣어 태울 수도 없이.\u003c/p>\n\u003cp>‘··· 차라리 잘됐지.’\u003c/p>\n\u003cp>이 장부만큼은 아무도 꾸며 주지 않을 테니.\u003c/p>\n\u003cp>공증인이 돌아가고, 집사가 촛대를 두 번 갈았다. 녹아내린 밀랍이 촛대 받침에 하얗게 고였다가 식으며 주름진 피막을 만들었다. 창밖이 검게 가라앉았다가 다시 푸르스름해졌다. 밤새 울던 매미가 잠시 그쳤다. 마지막 장에 닿은 것은 새벽녘이었다.\u003c/p>\n\u003cp>뤼시엔은 그제야 펜을 들었다.\u003c/p>\n\u003cp>펜대를 쥔 손가락 마디가 하얗게 질렸다. 아버지의 마지막 줄 아래에 곧게 선을 그었다. 펜촉이 종이를 긁는 소리가 고요한 서재에 유난히 크게 울렸다. 그리고 그 아래에 처음으로 자신의 이름을 적었다.\u003c/p>\n\u003cp class=\"it\">Lucien Théodore de Castellane.\u003c/p>\n\u003cp>잉크가 종이에 스미며 글자의 가장자리가 아주 조금 번졌다. 검은색이었다. 그 장부에서 처음으로 붉지 않은 이름이었다.\u003c/p>\n\u003cp>전기에서 넘어온 잔액은 붉은색이었다.\u003c/p>\n\u003cp>그는 그 숫자를 오래 내려다보았다. 이 붉은 숫자를 검게 돌려놓기 전까지는 어떤 장부도 덮지 않을 것이다. 판돈을 걸지 않을 것이다. 언성을 높이지 않을 것이다. 흐트러지지 않을 것이다. 그 사람이 한 모든 것의 정반대로.\u003c/p>\n\u003cp>그것이 아버지와 다르게 사는 첫걸음이었다. 적어도 그때는 그렇게 믿었다.\u003c/p>\n\u003cp>책상 한구석에 서랍 하나가 반쯤 열려 있었다. 밤새 장부를 꺼내느라 집사가 열어 두고 잊은 칸이었다. 몇 해째 쌓여 온 편지 묶음 위로 마른 꽃잎 한 장이 비어져 나와 있었다. 오렌지꽃이었다. 그 아래 깔린 봉투에는 짙은 청색 글씨로 그의 이름이 적혀 있었다.\u003c/p>\n\u003cp>동이 트며 들어온 첫 볕이 그 꽃잎에 가장 먼저 닿았다. 종잇장처럼 얇아진 꽃잎이 빛을 받아 반쯤 투명해졌다. 칠 년 전 정원에서, 소녀의 머리 위에서 볕에 비치던 그 꽃잎처럼. 꽃잎 너머로 청색 잉크가 희미하게 비쳐 보였다.\u003c/p>\n\u003cp>뤼시엔은 숨을 조금, 아주 조금 깊이 들이쉬었다.\u003c/p>\n\u003cp>아무 냄새도 나지 않았다. 낡은 장부의 퀴퀴한 냄새와 식은 밀랍 냄새뿐이었다. 그 오렌지꽃이 처음 그의 단춧구멍에 꽂혔던 날 목구멍을 조이던 그 들척지근한 향은, 이제 그의 머릿속에만 남아 있었다.\u003c/p>\n\u003cp>향이 빠졌으니 거슬릴 것도 없었다. 그래서 버리지 않았다. 몇 해째 스스로를 속이던 핑계는, 그날 새벽 처음으로 조금 맞지 않는 것 같았다.\u003c/p>\n\u003cdiv class=\"gap s3\">\u003c/div>\n\u003cp class=\"it\">1830년 8월. 전기이월(前期移越).\u003c/p>\n\u003cp class=\"it\">차변, 저당 영지 둘. 명예의 빚 열한 건. 사파이어 하나, 진주 한 줄, 에메랄드 한 쌍, 카메오 하나.\u003c/p>\n\u003cp class=\"it\">대변, 항구 창고 셋. 선박 넷. 카스텔란이라는 이름.\u003c/p>\n\u003cp class=\"it\">잔액, 적자.\u003c/p>\n\u003cdiv class=\"gap s2\">\u003c/div>\n\u003cp>카스텔란 백작가 당주, 뤼시엔 테오도르 드 카스텔란. 열여섯. 1830년 8월. 새벽. 작위 승계.\u003c/p>\n\u003cp class=\"end\" aria-label=\"끝\">\u003cspan>\u003c/span>\u003c/p>", "excerpt": "1814년 봄, 마침내 코르시카 출신의 황제가 무너졌다. 연합군의 군화가 파리의 진창을 밟았고, 황제는 지중해의 작은 섬 엘바로 실려 갔다. 단두대에서 죽은 왕의…", "chars": 14138}]}</script>
+<script src="assets/codec.js"></script>
 <script>
 {
-const D = JSON.parse(document.getElementById('data').textContent);
+/* ── 복사 방지 ── */
+['copy', 'cut', 'contextmenu', 'dragstart', 'selectstart'].forEach(ev =>
+  document.addEventListener(ev, e => e.preventDefault()));
+document.addEventListener('keydown', e => {
+  const k = (e.key || '').toLowerCase();
+  if ((e.ctrlKey || e.metaKey) && ['c', 'x', 'a', 's', 'p', 'u'].includes(k)) e.preventDefault();
+  if ((e.ctrlKey || e.metaKey) && e.shiftKey && ['i', 'j', 'c'].includes(k)) e.preventDefault();
+  if (k === 'f12') e.preventDefault();
+});
+window.addEventListener('beforeprint', () => { document.body.style.display = 'none'; });
+window.addEventListener('afterprint', () => { document.body.style.display = ''; });
+
 const $ = s => document.querySelector(s);
 const sheet = $('#sheet'), music = $('#music'), disc = $('#disc'), hint = $('#hint');
-const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const fmt = n => n.toLocaleString('ko-KR');
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt = n => Number(n || 0).toLocaleString('ko-KR');
+let D = {site: {title: 'LUCIEN'}, series: [], posts: []};
 const byId = id => D.posts.find(p => p.id === id);
 const seriesOf = p => D.series.find(s => s.id === p.series) || {name: ''};
 
+/* ── 데이터 불러오기 (글 목록은 한 번, 본문은 글을 열 때) ── */
+const fresh = path => fetch(`${path}?v=${Date.now()}`, {cache: 'no-store'})
+  .then(r => { if (!r.ok) throw new Error(r.status); return r.text(); })
+  .then(LogCodec.decode);
+const bodies = {};
+function getBody(id) {
+  if (!bodies[id]) bodies[id] = fresh(`posts/${id}.txt`).then(o => o.html).catch(e => { delete bodies[id]; throw e; });
+  return bodies[id];
+}
 
-
-/* ── 조회수 (GoatCounter) ── */
-const gc = D.site.goatcounter;
-if (gc) {
+/* ── 조회수 (GoatCounter: 사이트 설정에 코드가 있을 때만) ── */
+let gc = '';
+function setupCounter() {
+  gc = (D.site.goatcounter || '').trim();
+  if (!/^[a-z0-9-]+$/i.test(gc)) { gc = ''; return; }
   window.goatcounter = {no_onload: true};
   const s = document.createElement('script');
   s.async = true; s.src = 'https://gc.zgo.at/count.js';
@@ -143,7 +77,9 @@ if (gc) {
 }
 function count(path, title) {
   if (!gc) return;
-  const go = () => window.goatcounter && window.goatcounter.count ? window.goatcounter.count({path, title}) : setTimeout(go, 400);
+  let tries = 0;
+  const go = () => window.goatcounter && window.goatcounter.count ? window.goatcounter.count({path, title})
+    : (++tries < 25 && setTimeout(go, 400));
   go();
 }
 
@@ -157,14 +93,14 @@ function renderHome() {
       ${s.desc ? `<p>${esc(s.desc)}</p>` : ''}
       <ol class="list">${items.map(p => `<li><a href="#log-${esc(p.id)}" data-id="${esc(p.id)}">
         <span class="no">${esc(p.id)}</span>
-        <span class="ttl">${esc(p.title)}<span>${esc(p.hanja || '')}</span></span>
+        <span class="ttl">${esc(p.title)}<span>${esc(p.hanja)}</span></span>
         <span class="ex">${esc(p.excerpt)}</span>
         <span class="meta"><span>${fmt(p.chars)}자</span>${p.bgm ? '<span>♪ BGM</span>' : ''}</span>
       </a></li>`).join('')}</ol></section>`;
   }).join('');
   sheet.innerHTML = `<div class="view">
-    <header class="site-head"><h1>${esc(D.site.title)}</h1><p>${esc(D.site.subtitle || '')}</p></header>
-    ${groups}</div>`;
+    <header class="site-head"><h1>${esc(D.site.title)}</h1><p>${esc(D.site.subtitle)}</p></header>
+    ${groups || '<p class="loading">아직 올라온 글이 없어요.</p>'}</div>`;
   music.hidden = true;
   count('/', D.site.title);
 }
@@ -180,15 +116,21 @@ function renderPost(p) {
       <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M11 3 5 9l6 6" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>목록</button>
       <span class="crumb">${esc(s.name)} · ${esc(p.id)}. ${esc(p.title)}</span><span class="prog" id="prog"></span></div>
     <header class="post-head"><p class="kicker">${esc(s.name)} · ${esc(p.id)}</p>
-      <h1 tabindex="-1" id="ph">${esc(p.title)}<span>${esc(p.hanja || '')}</span></h1>
+      <h1 tabindex="-1" id="ph">${esc(p.title)}<span>${esc(p.hanja)}</span></h1>
       <svg class="orn" viewBox="0 0 120 18" aria-hidden="true"><path d="M0 9h50M70 9h50" stroke="currentColor" stroke-width=".8"/><path d="M60 5l4 4-4 4-4-4z" fill="currentColor"/></svg></header>
-    <div class="doc">${p.html}</div>
+    <div class="doc" id="doc"><p class="loading">불러오는 중…</p></div>
     <nav class="pager">
       ${prev ? `<a href="#log-${esc(prev.id)}" data-id="${esc(prev.id)}"><small>← 이전 글</small>${esc(prev.id)}. ${esc(prev.title)}</a>` : '<span></span>'}
       ${next ? `<a class="nx" href="#log-${esc(next.id)}" data-id="${esc(next.id)}"><small>다음 글 →</small>${esc(next.id)}. ${esc(next.title)}</a>` : ''}
     </nav>
     <button class="tolist" type="button" data-home>목록으로</button></div>`;
   music.hidden = !p.bgm;
+  getBody(p.id).then(html => {
+    // 본문은 관리자 화면의 변환기가 만든 정해진 태그만 담는다
+    if (current === p) $('#doc').innerHTML = html;
+  }).catch(() => {
+    if (current === p) $('#doc').innerHTML = '<p class="loading">글을 불러오지 못했어요. 잠시 뒤 새로고침해 주세요.</p>';
+  });
   count('/log-' + p.id, `${p.id}. ${p.title}`);
 }
 
@@ -197,8 +139,8 @@ let current = null;
 function show(id, gesture) {
   const p = id && byId(id);
   current = p || null;
-  if (p) { renderPost(p); playFor(p, gesture); }
-  else { renderHome(); pauseMusic(); }
+  if (p) { playFor(p, gesture); renderPost(p); }   // 클릭 직후 바로 음악부터
+  else { pauseMusic(); renderHome(); }
   window.scrollTo(0, 0);
   const h = $('#ph'); if (h) h.focus({preventScroll: true});
 }
@@ -287,7 +229,13 @@ disc.addEventListener('click', () => {
 });
 
 loadYT();
-show(idFromHash(), false);
+fresh('posts/list.txt').then(data => {
+  D = data; D.site = D.site || {}; D.series = D.series || []; D.posts = D.posts || [];
+  setupCounter();
+  show(idFromHash(), false);
+}).catch(() => {
+  sheet.innerHTML = '<p class="loading">목록을 불러오지 못했어요. 잠시 뒤 새로고침해 주세요.</p>';
+});
 }
 </script>
 </body>

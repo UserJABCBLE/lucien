@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<title>관리 · LUCIEN</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+.adm{max-width:900px}
+.top{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:22px}
+.top h1{font-size:clamp(26px,5vw,34px);margin:0;line-height:1.1}
+.top a{font-size:14px;color:var(--soft)}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--ink);margin-bottom:26px;overflow-x:auto}
+.tabs button{flex:none;background:none;border:0;border-bottom:2px solid transparent;padding:12px 14px;min-height:44px;cursor:pointer;font-size:15px;color:var(--soft);margin-bottom:-1px}
+.tabs button[aria-selected=true]{color:var(--ink);border-bottom-color:var(--gold);font-weight:700}
+.card{border:1px solid var(--line);padding:20px;margin-bottom:20px;background:#fffef9}
+.card h2{font-size:18px;margin:0 0 12px}
+label{display:block;font-size:14px;color:var(--soft);margin:14px 0 6px}
+input[type=text],input[type=password],input[type=url],select{width:100%;font:inherit;font-size:16px;padding:10px 12px;min-height:44px;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:2px}
+input:focus,select:focus,.paste:focus{outline:2px solid var(--gold);outline-offset:0;border-color:var(--gold)}
+.row{display:grid;grid-template-columns:110px minmax(0,1fr) minmax(0,1fr);gap:0 12px}
+.row2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 12px}
+@media(max-width:600px){.row,.row2{grid-template-columns:minmax(0,1fr)}}
+.help{font-size:13px;color:var(--soft);margin:6px 0 0;line-height:1.6}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:44px;padding:0 18px;border:1px solid var(--ink);background:none;cursor:pointer;font-size:15px}
+.btn.pri{background:var(--ink);color:var(--paper)}
+.btn.pri:hover{background:#000}
+.btn:hover{background:rgba(154,132,89,.08)}
+.btn.pri:hover{background:#000}
+.btn.sm{min-height:36px;padding:0 12px;font-size:14px}
+.btn.warn{border-color:#a33;color:#a33}
+.btn:disabled{opacity:.45;cursor:default}
+.acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.status{margin:14px 0 0;font-size:14px;min-height:1.4em}
+.status.ok{color:#3d6b3a}.status.err{color:#a33}
+.plist{list-style:none;margin:0;padding:0;border-top:1px solid var(--ink)}
+.plist li{display:grid;grid-template-columns:3em minmax(0,1fr) auto;gap:10px;align-items:center;padding:14px 4px;border-bottom:1px solid var(--line)}
+.plist .n{color:var(--gold);font-size:22px}
+.plist .t{font-weight:700}.plist .t span{font-weight:400;color:var(--soft);font-size:14px;margin-left:6px}
+.plist .m{font-size:13px;color:var(--soft)}
+.plist .b{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+@media(max-width:600px){.plist li{grid-template-columns:2.2em minmax(0,1fr)}.plist .b{grid-column:1/-1;justify-content:flex-start}}
+.paste{min-height:140px;max-height:240px;overflow:auto;border:1px dashed var(--gold);padding:16px;background:var(--paper);font-size:15px;color:var(--soft);white-space:pre-wrap}
+.paste.has{border-style:solid;color:var(--ink)}
+.stats{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--soft);margin-top:8px}
+.pv{margin-top:26px;border-top:1px solid var(--ink);padding-top:8px}
+.pv>h2{font-size:15px;color:var(--soft);font-weight:400;margin:0 0 6px}
+.pv .sheet{box-shadow:inset 0 0 0 1px var(--line);min-height:0}
+.pv .post-head{margin:60px 0 50px}.pv .orn{margin-top:40px}
+.empty{color:var(--soft);padding:24px 0;text-align:center}
+details summary{cursor:pointer;color:var(--ink);font-size:14px;min-height:32px}
+details ol{font-size:14px;line-height:1.8;padding-left:1.3em;margin:8px 0 0}
+code{font-size:13px;background:#f3eee3;padding:1px 5px;border-radius:2px}
+.serrow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;margin-bottom:8px}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<main class="wrap adm"><div class="sheet">
+  <div class="top"><h1>관리</h1><a href="../" target="_blank" rel="noopener">사이트 보기 ↗</a></div>
+
+  <!-- 연결 -->
+  <section id="connect" class="card" hidden>
+    <h2>GitHub 연결</h2>
+    <p class="help">게시하려면 이 저장소에 글을 저장할 수 있는 열쇠(토큰)가 필요해요. 열쇠는 이 브라우저에만 저장되고 GitHub 말고 다른 곳으로는 보내지지 않아요.</p>
+    <label for="cRepo">저장소</label>
+    <input type="text" id="cRepo" value="UserJABCBLE/lucien" autocomplete="off" spellcheck="false">
+    <label for="cToken">토큰</label>
+    <input type="password" id="cToken" placeholder="github_pat_로 시작하는 열쇠" autocomplete="off" spellcheck="false">
+    <details style="margin-top:14px"><summary>토큰 만드는 법</summary>
+      <ol>
+        <li>GitHub 오른쪽 위 프로필 사진 → <b>Settings</b> → 왼쪽 맨 아래 <b>Developer settings</b></li>
+        <li><b>Personal access tokens</b> → <b>Fine-grained tokens</b> → <b>Generate new token</b></li>
+        <li>Token name: <code>lucien-admin</code>, Expiration: 원하는 기간 (길게 해도 돼요)</li>
+        <li>Repository access: <b>Only select repositories</b> → <code>lucien</code> 하나만 선택</li>
+        <li>Permissions → Repository permissions → <b>Contents</b>를 <b>Read and write</b>로</li>
+        <li>맨 아래 <b>Generate token</b> → 나온 열쇠를 복사해서 위 칸에 붙여넣기</li>
+      </ol>
+      <p class="help">열쇠는 다시 볼 수 없으니, 다른 기기에서도 쓰려면 안전한 곳(비밀번호 관리자 등)에 보관하세요. 남에게 보여 주지 마세요.</p>
+    </details>
+    <div class="acts"><button class="btn pri" id="cSave" type="button">연결하기</button></div>
+    <p class="status" id="cStatus" role="status"></p>
+  </section>
+
+  <!-- 본 화면 -->
+  <section id="app" hidden>
+    <nav class="tabs" role="tablist">
+      <button role="tab" data-tab="list" aria-selected="true">글 목록</button>
+      <button role="tab" data-tab="edit" aria-selected="false" id="tabEdit">글쓰기</button>
+      <button role="tab" data-tab="settings" aria-selected="false">사이트 설정</button>
+    </nav>
+
+    <div data-panel="list">
+      <ul class="plist" id="plist"></ul>
+      <div class="acts"><button class="btn pri" type="button" id="newBtn">＋ 새 글 쓰기</button><button class="btn" type="button" id="reload">새로고침</button></div>
+      <p class="status" id="lStatus" role="status"></p>
+    </div>
+
+    <div data-panel="edit" hidden>
+      <div class="row">
+        <div><label for="fId">번호</label><input type="text" id="fId" placeholder="02" autocomplete="off"></div>
+        <div><label for="fTitle">제목</label><input type="text" id="fTitle" placeholder="은닉" autocomplete="off"></div>
+        <div><label for="fHanja">한자 (선택)</label><input type="text" id="fHanja" placeholder="隱匿" autocomplete="off"></div>
+      </div>
+      <div class="row2">
+        <div><label for="fSeries">게시판</label><select id="fSeries"></select></div>
+        <div><label for="fBgm">브금 유튜브 링크 (선택)</label><input type="url" id="fBgm" placeholder="https://www.youtube.com/watch?v=…" autocomplete="off" spellcheck="false"></div>
+      </div>
+      <p class="help" id="bgmInfo"></p>
+
+      <label for="paste">본문</label>
+      <div class="paste" id="paste" contenteditable="true" role="textbox" aria-multiline="true" spellcheck="false">구글 문서에서 본문 전체를 복사(Ctrl+A → Ctrl+C)해서 여기를 누르고 붙여넣으세요(Ctrl+V).</div>
+      <div class="stats" id="stats"></div>
+      <p class="help">기울임·굵게·가운데 정렬, 표로 만든 편지, <code>* * *</code> 구분선, 마지막 <code>-</code>, 맨 위 <code>[BGM]</code> 줄 처리는 지금 사이트와 똑같이 바뀌어요. 서식은 PC에서 붙여넣어야 제대로 따라와요. 또는 구글 문서에서 <b>파일 → 다운로드 → 웹페이지(.html)</b>로 받은 파일을 넣어도 돼요:
+        <input type="file" id="file" accept=".html,.htm,.txt,.zip" style="font-size:14px;margin-top:6px;max-width:100%"></p>
+
+      <div class="acts">
+        <button class="btn pri" type="button" id="publish">게시하기</button>
+        <button class="btn" type="button" id="cancel">취소</button>
+      </div>
+      <p class="status" id="eStatus" role="status"></p>
+
+      <div class="pv" id="pv" hidden><h2>미리보기</h2><div class="sheet" id="pvSheet"></div></div>
+    </div>
+
+    <div data-panel="settings" hidden>
+      <div class="card">
+        <h2>사이트</h2>
+        <label for="sTitle">사이트 제목</label><input type="text" id="sTitle">
+        <label for="sSub">부제</label><input type="text" id="sSub">
+      </div>
+      <div class="card">
+        <h2>게시판</h2>
+        <div id="serList"></div>
+        <button class="btn sm" type="button" id="serAdd">＋ 게시판 추가</button>
+        <p class="help">글이 하나라도 들어 있는 게시판은 지울 수 없어요.</p>
+      </div>
+      <div class="card">
+        <h2>조회수 (GoatCounter)</h2>
+        <label for="sGc">GoatCounter 코드</label><input type="text" id="sGc" placeholder="예: lucien-log" autocomplete="off" spellcheck="false">
+        <p class="help">goatcounter.com에 가입할 때 정한 코드만 넣으세요. 비워 두면 조회수를 세지 않아요. 통계는 <code>https://코드.goatcounter.com</code>에서 봐요.</p>
+      </div>
+      <div class="acts"><button class="btn pri" type="button" id="sSave">설정 저장</button></div>
+      <p class="status" id="sStatus" role="status"></p>
+      <div class="card" style="margin-top:34px">
+        <h2>연결</h2>
+        <p class="help" id="connInfo"></p>
+        <div class="acts"><button class="btn warn sm" type="button" id="logout">이 브라우저에서 열쇠 지우기</button></div>
+      </div>
+    </div>
+  </section>
+</div></main>
+
+<script src="../assets/codec.js"></script>
+<script src="../assets/convert.js"></script>
+<script>
+{
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt = n => Number(n || 0).toLocaleString('ko-KR');
+const KEY = 'lucien-admin';
+let conf = {};
+try { conf = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { conf = {}; }
+const saveConf = () => { try { localStorage.setItem(KEY, JSON.stringify(conf)); } catch (e) {} };
+
+function status(el, text, kind) { el.textContent = text; el.className = 'status' + (kind ? ' ' + kind : ''); }
+
+/* ── GitHub API ── */
+const API = 'https://api.github.com';
+async function gh(method, url, body) {
+  const r = await fetch(API + url, {
+    method, cache: 'no-store',
+    headers: {Authorization: 'Bearer ' + conf.token, Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28',
+      ...(body ? {'Content-Type': 'application/json'} : {})},
+    body: body ? JSON.stringify(body) : undefined
+  });
+  if (r.status === 404 && method === 'GET') return null;
+  if (!r.ok) {
+    let msg = r.status + '';
+    try { msg += ' ' + (await r.json()).message; } catch (e) {}
+    if (r.status === 401) msg = '열쇠가 맞지 않거나 기한이 지났어요 (401)';
+    if (r.status === 403) msg = '이 열쇠로는 저장할 권한이 없어요. Contents를 Read and write로 줬는지 확인하세요 (403)';
+    if (r.status === 409) msg = '다른 곳에서 먼저 바뀌었어요. 새로고침 후 다시 해 주세요 (409)';
+    throw new Error(msg);
+  }
+  return r.status === 204 ? {} : r.json();
+}
+const branch = () => conf.branch || 'main';
+async function getFile(path) {
+  const j = await gh('GET', `/repos/${conf.repo}/contents/${path}?ref=${branch()}&t=${Date.now()}`);
+  if (!j) return null;
+  return {sha: j.sha, text: atob((j.content || '').replace(/\s/g, ''))};
+}
+async function putFile(path, text, sha, message) {
+  const j = await gh('PUT', `/repos/${conf.repo}/contents/${path}`, {message, content: btoa(text), branch: branch(), ...(sha ? {sha} : {})});
+  return j.content.sha;
+}
+async function delFile(path, sha, message) {
+  await gh('DELETE', `/repos/${conf.repo}/contents/${path}`, {message, sha, branch: branch()});
+}
+
+/* ── 데이터 ── */
+let data = null, listSha = null;
+async function loadList() {
+  const f = await getFile('posts/list.txt');
+  if (f) { data = LogCodec.decode(f.text); listSha = f.sha; }
+  else { data = {site: {title: 'LUCIEN', subtitle: '-'}, series: [{id: 'lucien', name: 'Lucien Théodore de Castellane'}], posts: []}; listSha = null; }
+  data.site = data.site || {}; data.series = data.series || []; data.posts = data.posts || [];
+}
+async function saveList(message) { listSha = await putFile('posts/list.txt', LogCodec.encode(data), listSha, message); }
+
+/* ── 연결 ── */
+async function connect() {
+  const btn = $('#cSave'), st = $('#cStatus');
+  conf.repo = $('#cRepo').value.trim().replace(/^https?:\/\/github\.com\//, '').replace(/\/$/, '');
+  conf.token = $('#cToken').value.trim();
+  if (!/^[\w.-]+\/[\w.-]+$/.test(conf.repo)) return status(st, '저장소는 사용자이름/저장소이름 형식으로 적어 주세요.', 'err');
+  if (!conf.token) return status(st, '토큰을 붙여넣어 주세요.', 'err');
+  btn.disabled = true; status(st, '확인하는 중…');
+  try {
+    const repo = await gh('GET', `/repos/${conf.repo}`);
+    if (!repo) throw new Error('저장소를 찾지 못했어요. 이름과, 토큰에 이 저장소를 골랐는지 확인하세요.');
+    if (repo.permissions && !repo.permissions.push) throw new Error('이 열쇠로는 저장할 수 없어요. Contents를 Read and write로 줬는지 확인하세요.');
+    conf.branch = repo.default_branch || 'main';
+    saveConf();
+    $('#cToken').value = '';
+    await enter();
+  } catch (e) { status(st, e.message, 'err'); }
+  btn.disabled = false;
+}
+async function enter() {
+  $('#connect').hidden = true; $('#app').hidden = false;
+  $('#connInfo').textContent = `저장소 ${conf.repo} (${branch()})에 연결되어 있어요.`;
+  await refresh();
+}
+async function refresh() {
+  status($('#lStatus'), '불러오는 중…');
+  try { await loadList(); renderList(); status($('#lStatus'), ''); fillSettings(); }
+  catch (e) { status($('#lStatus'), e.message, 'err'); }
+}
+
+/* ── 탭 ── */
+function tab(name) {
+  document.querySelectorAll('[data-tab]').forEach(b => b.setAttribute('aria-selected', b.dataset.tab === name));
+  document.querySelectorAll('[data-panel]').forEach(p => p.hidden = p.dataset.panel !== name);
+  window.scrollTo(0, 0);
+}
+document.querySelector('.tabs').addEventListener('click', e => {
+  const b = e.target.closest('[data-tab]'); if (!b) return;
+  if (b.dataset.tab === 'edit' && !editing) openEditor(null); else tab(b.dataset.tab);
+});
+
+/* ── 글 목록 ── */
+const seriesName = id => (data.series.find(s => s.id === id) || {}).name || '';
+let armed = null;
+function renderList() {
+  const ul = $('#plist');
+  if (!data.posts.length) { ul.innerHTML = '<li class="empty" style="display:block">아직 글이 없어요.</li>'; return; }
+  ul.innerHTML = data.posts.map((p, i) => `<li>
+    <span class="n">${esc(p.id)}</span>
+    <span><span class="t">${esc(p.title)}<span>${esc(p.hanja)}</span></span><br>
+      <span class="m">${esc(seriesName(p.series))} · ${fmt(p.chars)}자${p.bgm ? ' · ♪' : ''}</span></span>
+    <span class="b">
+      <button class="btn sm" data-act="up" data-i="${i}" ${i ? '' : 'disabled'} aria-label="위로">↑</button>
+      <button class="btn sm" data-act="down" data-i="${i}" ${i < data.posts.length - 1 ? '' : 'disabled'} aria-label="아래로">↓</button>
+      <button class="btn sm" data-act="edit" data-i="${i}">수정</button>
+      <button class="btn sm warn" data-act="del" data-i="${i}">${armed === p.id ? '정말 삭제' : '삭제'}</button>
+    </span></li>`).join('');
+}
+$('#plist').addEventListener('click', async e => {
+  const b = e.target.closest('[data-act]'); if (!b) return;
+  const i = +b.dataset.i, p = data.posts[i], st = $('#lStatus');
+  if (b.dataset.act === 'edit') return openEditor(p);
+  if (b.dataset.act === 'del' && armed !== p.id) { armed = p.id; renderList(); status(st, `「${p.title}」을 지우려면 '정말 삭제'를 한 번 더 누르세요.`); return; }
+  armed = null;
+  const btns = [...document.querySelectorAll('#plist button, #newBtn')]; btns.forEach(x => x.disabled = true);
+  try {
+    if (b.dataset.act === 'del') {
+      status(st, '삭제하는 중…');
+      const f = await getFile(`posts/${p.id}.txt`);
+      data.posts.splice(i, 1);
+      await saveList(`글 삭제: ${p.id}. ${p.title}`);
+      if (f) await delFile(`posts/${p.id}.txt`, f.sha, `글 파일 삭제: ${p.id}`);
+      status(st, '삭제했어요. 1~2분 뒤 사이트에서도 사라져요.', 'ok');
+    } else {
+      const j = b.dataset.act === 'up' ? i - 1 : i + 1;
+      [data.posts[i], data.posts[j]] = [data.posts[j], data.posts[i]];
+      status(st, '순서를 저장하는 중…');
+      await saveList('글 순서 변경');
+      status(st, '순서를 바꿨어요. 1~2분 뒤 반영돼요.', 'ok');
+    }
+  } catch (err) { status(st, err.message, 'err'); await refresh(); }
+  renderList();
+});
+$('#newBtn').addEventListener('click', () => openEditor(null));
+$('#reload').addEventListener('click', refresh);
+
+/* ── 글쓰기 ── */
+let editing = null, frag = '';
+const PLACE = $('#paste').textContent;
+function ytId(s) {
+  s = (s || '').trim(); if (!s) return '';
+  if (/^[\w-]{11}$/.test(s)) return s;
+  const m = s.match(/(?:v=|youtu\.be\/|embed\/|shorts\/|live\/)([\w-]{11})/);
+  return m ? m[1] : null;
+}
+function nextId() {
+  const nums = data.posts.map(p => parseInt(p.id, 10)).filter(n => !isNaN(n));
+  return String((nums.length ? Math.max(...nums) : 0) + 1).padStart(2, '0');
+}
+function openEditor(p) {
+  editing = p ? p : {isNew: true};
+  frag = '';
+  $('#tabEdit').textContent = p ? '글 수정' : '글쓰기';
+  $('#fSeries').innerHTML = data.series.map(s => `<option value="${esc(s.id)}">${esc(s.name)}</option>`).join('');
+  $('#fId').value = p ? p.id : nextId();
+  $('#fTitle').value = p ? p.title : '';
+  $('#fHanja').value = p ? (p.hanja || '') : '';
+  $('#fSeries').value = p ? p.series : (data.series[0] || {}).id || '';
+  $('#fBgm').value = p && p.bgm ? 'https://www.youtube.com/watch?v=' + p.bgm : '';
+  resetPaste(); bgmInfo(); status($('#eStatus'), '');
+  $('#pv').hidden = true;
+  tab('edit');
+  if (p) {
+    status($('#eStatus'), '기존 본문을 불러오는 중…');
+    getFile(`posts/${p.id}.txt`).then(f => {
+      if (editing !== p || frag) return;
+      if (f) { frag = LogCodec.decode(f.text).html; showConverted('기존 본문 (새로 붙여넣으면 바뀌어요)'); }
+      status($('#eStatus'), '');
+    }).catch(e => status($('#eStatus'), e.message, 'err'));
+  }
+}
+function resetPaste() { const el = $('#paste'); el.textContent = PLACE; el.classList.remove('has'); $('#stats').textContent = ''; }
+function bgmInfo() {
+  const v = ytId($('#fBgm').value), el = $('#bgmInfo');
+  el.textContent = v === '' ? '브금 없이 올려요.' : v ? `영상 ID ${v} — 글을 열면 이 곡이 반복 재생돼요.` : '유튜브 링크를 알아보지 못했어요. 주소를 다시 확인해 주세요.';
+  el.style.color = v === null ? '#a33' : '';
+}
+$('#fBgm').addEventListener('input', bgmInfo);
+$('#fTitle').addEventListener('input', renderPreview);
+$('#fHanja').addEventListener('input', renderPreview);
+$('#fId').addEventListener('input', renderPreview);
+
+function showConverted(label) {
+  const el = $('#paste'), s = LogConvert.summary(frag);
+  const box = document.createElement('div'); box.innerHTML = frag;
+  el.classList.add('has');
+  el.textContent = `${label}\n\n${s.excerpt}`;
+  $('#stats').innerHTML = `<span>${fmt(s.chars)}자 (공백 제외)</span><span>문단 ${box.querySelectorAll('p:not(.sep):not(.end)').length}</span><span>편지 ${box.querySelectorAll('.letter').length}</span><span>장면 구분 ${box.querySelectorAll('.sep').length}</span>`;
+  renderPreview();
+}
+function renderPreview() {
+  if (!frag) { $('#pv').hidden = true; return; }
+  $('#pv').hidden = false;
+  const hanja = $('#fHanja').value.trim(), title = $('#fTitle').value.trim() || '제목', sname = seriesName($('#fSeries').value);
+  $('#pvSheet').innerHTML = `<header class="post-head"><p class="kicker">${esc(sname)} · ${esc($('#fId').value.trim())}</p>
+    <h1>${esc(title)}<span>${esc(hanja)}</span></h1>
+    <svg class="orn" viewBox="0 0 120 18" aria-hidden="true"><path d="M0 9h50M70 9h50" stroke="currentColor" stroke-width=".8"/><path d="M60 5l4 4-4 4-4-4z" fill="currentColor"/></svg></header>
+    <div class="doc">${frag}</div>`;
+}
+$('#fSeries').addEventListener('change', renderPreview);
+
+$('#paste').addEventListener('paste', e => {
+  e.preventDefault();
+  const cd = e.clipboardData, html = cd.getData('text/html'), text = cd.getData('text/plain');
+  if (!html && !text) return;
+  frag = html ? LogConvert.fromHTML(html) : LogConvert.fromText(text);
+  showConverted(html ? '붙여넣은 본문 (서식 포함)' : '붙여넣은 본문 (글자만 — 기울임 등 서식은 PC에서 붙여넣어야 따라와요)');
+  status($('#eStatus'), '');
+});
+$('#paste').addEventListener('focus', () => { if (!frag) $('#paste').textContent = ''; });
+$('#paste').addEventListener('blur', () => { if (!frag) resetPaste(); });
+$('#paste').addEventListener('keydown', e => { if (!(e.ctrlKey || e.metaKey) && e.key.length === 1) e.preventDefault(); });
+$('#file').addEventListener('change', async e => {
+  const f = e.target.files[0]; if (!f) return;
+  if (/\.zip$/i.test(f.name)) { status($('#eStatus'), 'zip은 풀어서 안의 .html 파일을 넣어 주세요.', 'err'); return; }
+  const txt = await f.text();
+  frag = /\.html?$/i.test(f.name) ? LogConvert.fromHTML(txt) : LogConvert.fromText(txt);
+  showConverted(`파일에서 불러온 본문: ${f.name}`);
+  e.target.value = '';
+});
+$('#cancel').addEventListener('click', () => { editing = null; frag = ''; $('#tabEdit').textContent = '글쓰기'; tab('list'); });
+
+$('#publish').addEventListener('click', async () => {
+  const st = $('#eStatus'), btn = $('#publish');
+  const id = $('#fId').value.trim(), title = $('#fTitle').value.trim(), hanja = $('#fHanja').value.trim();
+  const series = $('#fSeries').value, bgm = ytId($('#fBgm').value);
+  if (!/^[A-Za-z0-9]{1,12}$/.test(id)) return status(st, '번호는 숫자나 영문으로만 적어 주세요 (예: 02).', 'err');
+  if (!title) return status(st, '제목을 적어 주세요.', 'err');
+  if (bgm === null) return status(st, '브금 링크를 알아보지 못했어요.', 'err');
+  if (!frag) return status(st, '본문을 붙여넣어 주세요.', 'err');
+  btn.disabled = true; status(st, '게시하는 중…');
+  try {
+    await loadList();   // 최신 목록 기준으로 저장
+    const old = editing && !editing.isNew ? editing.id : null;
+    if (id !== old && data.posts.some(p => p.id === id)) throw new Error(`${id}번 글이 이미 있어요. 다른 번호를 적어 주세요.`);
+    const s = LogConvert.summary(frag);
+    const meta = {id, series, title, hanja, bgm, excerpt: s.excerpt, chars: s.chars, updated: new Date().toISOString().slice(0, 10)};
+    const f = await getFile(`posts/${id}.txt`);
+    await putFile(`posts/${id}.txt`, LogCodec.encode({id, html: frag}), f && f.sha, `${old ? '글 수정' : '새 글'}: ${id}. ${title}`);
+    const at = old ? data.posts.findIndex(p => p.id === old) : -1;
+    if (at >= 0) data.posts[at] = meta; else data.posts.push(meta);
+    await saveList(`목록 갱신: ${id}. ${title}`);
+    if (old && old !== id) { const of = await getFile(`posts/${old}.txt`); if (of) await delFile(`posts/${old}.txt`, of.sha, `번호 변경으로 옛 파일 삭제: ${old}`); }
+    editing = meta;
+    renderList();
+    status(st, '게시했어요. 1~2분 뒤 사이트에 나타나요.', 'ok');
+  } catch (e) { status(st, e.message, 'err'); }
+  btn.disabled = false;
+});
+
+/* ── 사이트 설정 ── */
+function fillSettings() {
+  $('#sTitle').value = data.site.title || '';
+  $('#sSub').value = data.site.subtitle || '';
+  $('#sGc').value = data.site.goatcounter || '';
+  $('#serList').innerHTML = data.series.map((s, i) => `<div class="serrow">
+    <input type="text" data-ser="${i}" value="${esc(s.name)}" aria-label="게시판 이름">
+    <button class="btn sm warn" type="button" data-serdel="${i}" ${data.posts.some(p => p.series === s.id) ? 'disabled' : ''}>지우기</button></div>`).join('');
+}
+$('#serAdd').addEventListener('click', () => {
+  data.series.push({id: 's' + Date.now().toString(36), name: '새 게시판'});
+  fillSettings();
+});
+$('#serList').addEventListener('input', e => { const i = e.target.dataset.ser; if (i != null) data.series[i].name = e.target.value; });
+$('#serList').addEventListener('click', e => { const i = e.target.dataset.serdel; if (i != null) { data.series.splice(+i, 1); fillSettings(); } });
+$('#sSave').addEventListener('click', async () => {
+  const st = $('#sStatus'), btn = $('#sSave');
+  const gc = $('#sGc').value.trim().replace(/^https?:\/\//, '').replace(/\.goatcounter\.com.*$/, '');
+  if (gc && !/^[a-z0-9-]+$/i.test(gc)) return status(st, 'GoatCounter 코드는 영문, 숫자, - 만 쓸 수 있어요.', 'err');
+  const edits = {title: $('#sTitle').value.trim() || 'LUCIEN', subtitle: $('#sSub').value.trim(), goatcounter: gc};
+  const series = data.series.map(s => ({...s, name: s.name.trim() || '게시판'}));
+  btn.disabled = true; status(st, '저장하는 중…');
+  try {
+    await loadList();
+    Object.assign(data.site, edits); data.series = series;
+    await saveList('사이트 설정 변경');
+    fillSettings();
+    status(st, '저장했어요. 1~2분 뒤 반영돼요.', 'ok');
+  } catch (e) { status(st, e.message, 'err'); }
+  btn.disabled = false;
+});
+$('#logout').addEventListener('click', () => {
+  delete conf.token; saveConf();
+  $('#app').hidden = true; $('#connect').hidden = false; $('#cRepo').value = conf.repo || '';
+  status($('#cStatus'), '이 브라우저에서 열쇠를 지웠어요.', 'ok');
+});
+
+$('#cSave').addEventListener('click', connect);
+$('#cToken').addEventListener('keydown', e => { if (e.key === 'Enter') connect(); });
+if (conf.token && conf.repo) enter().catch(() => { $('#connect').hidden = false; });
+else { $('#connect').hidden = false; if (conf.repo) $('#cRepo').value = conf.repo; }
+}
+</script>
+</body>
+</html>
